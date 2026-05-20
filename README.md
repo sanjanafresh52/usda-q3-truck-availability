@@ -1,6 +1,6 @@
 # Q3 Reefer Truck Availability — USDA AMS
 
-Automated **line graph** of weekly refrigerated-truck availability across Q3 (Jul–Sep), by USDA shipping region. Availability is the AMS weekly market rating on a 1–5 scale (1 = Surplus, 5 = Shortage); the chart shows each region's 4-year-average trajectory through the quarter with a dashed reference line at **3 (Adequate)** so weeks above/below the threshold are easy to spot. Data is pulled live from the USDA AMS Refrigerated Truck Rates and Availability dataset (Socrata `acar-e3r8`) and publishes to GitHub Pages — drop the URL into your Q3 customer report as an iframe.
+Automated **line graph** of weekly refrigerated-truck availability across Q3 (Jul–Sep). Availability is the AMS weekly market rating on a 1–5 scale (1 = Surplus, 5 = Shortage); the chart shows the **report-weighted average across the regions you select**, with a dashed reference at **3 (Adequate)** so weeks above/below the threshold are easy to spot. Two lines total: the average and the threshold. Data is pulled live from the USDA AMS Refrigerated Truck Rates and Availability dataset (Socrata `acar-e3r8`) and publishes to GitHub Pages — drop the URL into your Q3 customer report as an iframe.
 
 **Live URL:** `https://<your-username>.github.io/usda-q3-truck-availability/`
 
@@ -23,11 +23,11 @@ After ~90 seconds the chart publishes at your Pages URL.
 
 1. Pulls every Q3 (Jul/Aug/Sep) row from the **AMS Refrigerated Truck Rates and Availability** dataset for the last 4 complete calendar years.
 2. Aggregates the mean availability score by **commodity × USDA shipping region × ISO week**.
-3. Renders a multi-line chart — one line per region — with a dashed reference at **score = 3** dividing the surplus zone (below) from the shortage zone (above).
+3. **Combines** the selected regions into a single weekly average — each region's weekly score is weighted by its lane-week report count, so a region with 200 reports counts more than one with 5. Renders that average as a single line, with a dashed reference at **score = 3** dividing the surplus zone (below) from the shortage zone (above).
 4. **Filters:**
    - **Commodity** — top 30 by report count plus an "All Commodities" rollup.
-   - **Regions** — multi-select chips, each color-matched to its line. Mexico crossings (dashed lines) start off; click to include. "All" / "None" buttons for fast toggling.
-5. **Hover** anywhere on the chart for a snapshot of every visible region's score that week, sorted high → low.
+   - **Regions** — multi-select chips. Mexico crossings start off; click to include. "All" / "None" buttons for fast toggling. Changing the region selection re-aggregates the line.
+5. **Hover** anywhere on the chart for the week's average score, ordinal label, contributing region count, and total report count.
 
 ---
 
@@ -72,8 +72,9 @@ python scripts/build_dashboard.py       # renders HTML
 
 ## Customization
 
-- **Region line colors:** edit the `REGION_STYLE` map at the top of the `<script>` in `templates/template.html.j2`.
+- **Average line color:** the `--accent` CSS variable at the top of the template (defaults to Mango Tango #ec7700).
 - **Threshold line:** change `const THRESHOLD = 3;` in the template.
+- **Weighted vs unweighted average:** the `aggregateWeekly()` function in the template uses `sum += score * n; total_n += n;` — drop the `* n` and divide by region count to switch to an unweighted mean.
 - **Top-N commodities:** the script keeps the top 30 by report count; bump `TOP_N_COMMODITIES` in `fetch_availability.py` if you want more.
 - **Different time window:** change `N_YEARS` or `Q3_MONTHS` in `fetch_availability.py`.
 

@@ -23,7 +23,7 @@
     --accent-light: #fdf3e6;
     --accent-hover: #fbe9d3;
 
-    --threshold: #5a5a5a;       /* threshold line */
+    --threshold: #5a5a5a;
     --shortage-bg: rgba(236, 119, 0, 0.04);
     --surplus-bg: rgba(74, 139, 44, 0.04);
   }
@@ -123,46 +123,14 @@
     border-radius: 8px;
     transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
     white-space: nowrap;
-    position: relative;
   }
   .pill:hover { background: var(--accent-hover); border-color: var(--accent); }
   .pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-  /* region pill carries a color swatch matching its line */
-  .pill.region-pill { padding-left: 28px; }
-  .pill.region-pill::before {
-    content: "";
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--swatch, #ccc);
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
-  }
-  .pill.region-pill.dashed::after {
-    content: "";
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 5px;
-    height: 1.5px;
-    background: var(--bg);
-  }
-  .pill.region-pill.inactive {
-    color: var(--ink-muted);
-    background: var(--bg-soft);
-    opacity: 0.55;
-  }
-  .pill.region-pill.inactive::before { opacity: 0.55; }
-
   @media (prefers-reduced-motion: no-preference) {
     .pill {
       transition: transform 140ms ease, background-color 140ms ease, color 140ms ease,
-                  border-color 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+                  border-color 140ms ease, box-shadow 140ms ease;
     }
     .pill:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
     .pill:active { transform: translateY(0); box-shadow: none; }
@@ -234,12 +202,7 @@
     padding: 18px 14px 10px;
     position: relative;
   }
-
-  .chart-svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+  .chart-svg { width: 100%; height: auto; display: block; }
 
   /* axis text */
   .axis-text {
@@ -263,7 +226,7 @@
   /* threshold line */
   .threshold-line {
     stroke: var(--threshold);
-    stroke-width: 1.2;
+    stroke-width: 1.4;
     stroke-dasharray: 6 4;
     fill: none;
   }
@@ -284,22 +247,21 @@
     fill: var(--ink-muted);
   }
 
-  /* lines + dots */
-  .series-line {
+  /* the single average line */
+  .avg-line {
     fill: none;
-    stroke-width: 2;
+    stroke: var(--accent);
+    stroke-width: 2.6;
     stroke-linejoin: round;
     stroke-linecap: round;
-    transition: opacity 140ms ease, stroke-width 140ms ease;
   }
-  .series-line.dimmed { opacity: 0.18; }
-  .series-line.highlight { stroke-width: 3; }
-  .series-dot {
-    transition: opacity 140ms ease, r 140ms ease;
+  .avg-dot {
+    fill: var(--accent);
+    stroke: var(--bg);
+    stroke-width: 1.5;
   }
-  .series-dot.dimmed { opacity: 0.15; }
 
-  /* hover cursor */
+  /* hover */
   .hover-line {
     stroke: var(--ink);
     stroke-width: 1;
@@ -310,6 +272,7 @@
   .hover-line.visible { opacity: 0.5; }
   .hover-dot {
     fill: var(--bg);
+    stroke: var(--accent);
     stroke-width: 2;
     pointer-events: none;
   }
@@ -329,35 +292,28 @@
     transition: opacity 120ms;
     z-index: 40;
     box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-    line-height: 1.4;
+    line-height: 1.45;
     font-variant-numeric: tabular-nums;
-    max-width: 280px;
+    max-width: 240px;
   }
   .tooltip strong {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
     font-weight: 600;
     display: block;
-    margin-bottom: 6px;
-    border-bottom: 1px solid rgba(255,255,255,0.18);
-    padding-bottom: 4px;
+    margin-bottom: 4px;
   }
-  .tt-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11.5px;
-    line-height: 1.5;
+  .tt-week-date { font-size: 11px; color: #d9d9d9; margin-bottom: 6px; }
+  .tt-score-big {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+    margin-bottom: 2px;
   }
-  .tt-swatch {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .tt-region { flex: 1; color: #f8c785; }
-  .tt-score { font-weight: 700; min-width: 30px; text-align: right; }
-  .tt-label { font-size: 10.5px; color: #d9d9d9; min-width: 88px; text-align: right; }
+  .tt-label { font-size: 11.5px; color: #f8c785; font-weight: 600; }
+  .tt-meta { font-size: 10.5px; color: #b0b0b0; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.16); }
 
   .source {
     margin-top: 16px;
@@ -399,9 +355,10 @@
 
   <div class="viz-header">
     <div>
-      <div class="viz-title">Weekly availability score, Jul–Sep</div>
-      <div class="viz-subtitle">1 = Surplus · 3 = Adequate (threshold) · 5 = Shortage</div>
+      <div class="viz-title">Weekly average availability across selected regions</div>
+      <div class="viz-subtitle">1 = Surplus · 3 = Adequate (threshold) · 5 = Shortage · weighted by lane-week reports</div>
     </div>
+    <div class="viz-subtitle" id="regionsSummary"></div>
   </div>
 
   <div class="chart-area">
@@ -428,36 +385,14 @@
   };
   const THRESHOLD = 3;
 
-  // Region → stroke style. d3.schemeTableau10 plus dashed variants for Mexico
-  // crossings so they remain visually grouped with their US counterpart.
-  const REGION_STYLE = {
-    "California":        { color: "#4E79A7", dash: null },
-    "PNW":               { color: "#59A14F", dash: null },
-    "Florida":           { color: "#E15759", dash: null },
-    "Texas":             { color: "#F28E2B", dash: null },
-    "Southeast":         { color: "#76B7B2", dash: null },
-    "Mid-Atlantic":      { color: "#B07AA1", dash: null },
-    "Great Lakes":       { color: "#9C755F", dash: null },
-    "New York":          { color: "#EDC948", dash: null },
-    "Arizona":           { color: "#FF9DA7", dash: null },
-    "Colorado":          { color: "#BAB0AC", dash: null },
-    "Mexico-California": { color: "#4E79A7", dash: "5 4" },
-    "Mexico-Arizona":    { color: "#FF9DA7", dash: "5 4" },
-    "Mexico-New Mexico": { color: "#B07AA1", dash: "5 4" },
-    "Mexico-Texas":      { color: "#F28E2B", dash: "5 4" },
-  };
-  const FALLBACK_STYLE = { color: "#888", dash: null };
-  function styleFor(region) { return REGION_STYLE[region] || FALLBACK_STYLE; }
-
   // ═══════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════
   let currentCommodity = ALL_COMMODITIES_KEY;
-  // Mexico crossings default OFF to keep the initial view clean — toggle on via chip.
+  // Mexico crossings default OFF for a cleaner US-shipping-region average.
   let activeRegions = new Set(REGIONS.filter(r => !r.startsWith("Mexico-")));
   let featuredCommodities = [];
   let dropdownCommodities = [];
-  let highlightRegion = null;  // hover-highlight from chip
 
   // ═══════════════════════════════════════════════════════════════
   // COMMODITY SELECTOR
@@ -538,11 +473,11 @@
   });
 
   // ═══════════════════════════════════════════════════════════════
-  // REGION SELECTOR
+  // REGION SELECTOR (multi-select; scopes which regions feed the average)
   // ═══════════════════════════════════════════════════════════════
   function renderRegionPills() {
     const el = document.getElementById("regionPills");
-    // Sort: US regions first (alpha), then Mexico crossings.
+    // US regions alpha, then Mexico crossings.
     const ordered = REGIONS.slice().sort((a, b) => {
       const ax = a.startsWith("Mexico-") ? 1 : 0;
       const bx = b.startsWith("Mexico-") ? 1 : 0;
@@ -550,14 +485,9 @@
       return a.localeCompare(b);
     });
     el.innerHTML = ordered.map(r => {
-      const s = styleFor(r);
       const active = activeRegions.has(r);
-      const classes = ["pill", "region-pill"];
-      if (!active) classes.push("inactive");
-      if (s.dash) classes.push("dashed");
-      return `<button class="${classes.join(' ')}" data-r="${r}" style="--swatch:${s.color}">${r}</button>`;
+      return `<button class="pill ${active ? 'active' : ''}" data-r="${r}">${r}</button>`;
     }).join("");
-
     el.querySelectorAll(".pill[data-r]").forEach(b => {
       b.addEventListener("click", () => {
         const r = b.dataset.r;
@@ -565,14 +495,6 @@
         else activeRegions.add(r);
         renderRegionPills();
         renderChart();
-      });
-      b.addEventListener("mouseenter", () => {
-        highlightRegion = b.dataset.r;
-        applyHighlight();
-      });
-      b.addEventListener("mouseleave", () => {
-        highlightRegion = null;
-        applyHighlight();
       });
     });
   }
@@ -589,35 +511,56 @@
   });
 
   // ═══════════════════════════════════════════════════════════════
+  // AGGREGATION — weighted mean across selected regions per week
+  // ═══════════════════════════════════════════════════════════════
+  function aggregateWeekly() {
+    // For each week in WEEKS, walk every active region's cell and accumulate
+    //   sum  += score * n     // n weights the regional mean
+    //   total_n += n
+    //   regions_contributing += 1 if it had data this week
+    // Then avg = sum / total_n.
+    const commodityData = AVAILABILITY[currentCommodity] || {};
+    const series = WEEKS.map(wk => {
+      let sum = 0, totalN = 0, regionsHit = 0;
+      activeRegions.forEach(region => {
+        const cell = (commodityData[region] || {})[String(wk.w)];
+        if (!cell || cell.n == null || cell.n <= 0) return;
+        sum += cell.score * cell.n;
+        totalN += cell.n;
+        regionsHit += 1;
+      });
+      if (totalN === 0) return { w: wk.w, label: wk.label, score: null, n: 0, regions: 0 };
+      return { w: wk.w, label: wk.label, score: sum / totalN, n: totalN, regions: regionsHit };
+    });
+    return series;
+  }
+
+  // ═══════════════════════════════════════════════════════════════
   // CHART
   // ═══════════════════════════════════════════════════════════════
   const svgEl = document.getElementById("chartSvg");
   const tooltip = document.getElementById("tooltip");
   const chartArea = document.querySelector(".chart-area");
 
-  // Layout constants. viewBox = 960 × 480.
   const W = 960, H = 480;
-  const M = { top: 24, right: 110, bottom: 56, left: 56 };
+  const M = { top: 24, right: 110, bottom: 64, left: 56 };
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
-  function seriesFor(region) {
-    const regionData = (AVAILABILITY[currentCommodity] || {})[region] || {};
-    return WEEKS
-      .map(wk => {
-        const cell = regionData[String(wk.w)];
-        if (!cell) return null;
-        return { w: wk.w, label: wk.label, score: cell.score, n: cell.n };
-      })
-      .filter(p => p !== null);
-  }
-
   function renderChart() {
     document.getElementById("commodityName").textContent = currentCommodity;
+
+    // Region summary line above the chart
+    const summary = activeRegions.size === 0
+      ? "no regions selected"
+      : activeRegions.size === REGIONS.length
+        ? `averaging all ${activeRegions.size} regions`
+        : `averaging ${activeRegions.size} of ${REGIONS.length} regions`;
+    document.getElementById("regionsSummary").textContent = summary;
+
     const svg = d3.select(svgEl);
     svg.selectAll("*").remove();
 
-    // X scale: index over the WEEKS array (so even sparse weeks render evenly).
     const x = d3.scaleLinear()
       .domain([0, Math.max(WEEKS.length - 1, 1)])
       .range([0, innerW]);
@@ -627,7 +570,7 @@
 
     const g = svg.append("g").attr("transform", `translate(${M.left},${M.top})`);
 
-    // Zone tints — subtle wash above/below threshold for fast pattern reading.
+    // Zone tints
     g.append("rect")
       .attr("x", 0).attr("y", 0)
       .attr("width", innerW).attr("height", y(THRESHOLD))
@@ -637,7 +580,7 @@
       .attr("width", innerW).attr("height", innerH - y(THRESHOLD))
       .attr("fill", "var(--surplus-bg)");
 
-    // Horizontal gridlines at integer scores.
+    // Horizontal gridlines at every integer score
     [1, 2, 3, 4, 5].forEach(v => {
       g.append("line")
         .attr("class", "gridline")
@@ -645,7 +588,7 @@
         .attr("y1", y(v)).attr("y2", y(v));
     });
 
-    // Y axis: integer ticks 1..5 with score labels.
+    // Y axis labels
     [1, 2, 3, 4, 5].forEach(v => {
       g.append("text")
         .attr("class", "axis-text")
@@ -660,21 +603,25 @@
         .text(SCORE_LABELS[v]);
     });
 
-    // X axis: week labels. Skip every other one if crowded.
-    const tickEvery = WEEKS.length > 8 ? 2 : 1;
+    // X axis — week numbers (e.g. "Wk 27"), with the date label as a small
+    // secondary line under each tick so customers reading the chart still see
+    // when in Q3 a given week sits.
     WEEKS.forEach((wk, i) => {
       g.append("line")
         .attr("class", "gridline")
         .attr("x1", x(i)).attr("x2", x(i))
         .attr("y1", 0).attr("y2", innerH)
         .attr("opacity", 0.4);
-      if (i % tickEvery === 0 || i === WEEKS.length - 1) {
-        g.append("text")
-          .attr("class", "axis-text")
-          .attr("x", x(i)).attr("y", innerH + 18)
-          .attr("text-anchor", "middle")
-          .text(wk.label);
-      }
+      g.append("text")
+        .attr("class", "axis-text")
+        .attr("x", x(i)).attr("y", innerH + 18)
+        .attr("text-anchor", "middle")
+        .text(`Wk ${wk.w}`);
+      g.append("text")
+        .attr("class", "axis-label")
+        .attr("x", x(i)).attr("y", innerH + 34)
+        .attr("text-anchor", "middle")
+        .text(wk.label);
     });
 
     // Axis lines
@@ -683,7 +630,7 @@
     g.append("line").attr("class", "axis-line")
       .attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", innerH);
 
-    // Threshold line at y=3.
+    // Threshold line at y=3 + side labels
     g.append("line")
       .attr("class", "threshold-line")
       .attr("x1", 0).attr("x2", innerW)
@@ -695,70 +642,59 @@
       .text("Adequate (3)");
     g.append("text")
       .attr("class", "zone-label")
-      .attr("x", innerW + 8).attr("y", y(THRESHOLD) - 12)
+      .attr("x", innerW + 8).attr("y", y(THRESHOLD) - 14)
       .attr("dominant-baseline", "central")
       .text("↑ Shortage");
     g.append("text")
       .attr("class", "zone-label")
-      .attr("x", innerW + 8).attr("y", y(THRESHOLD) + 14)
+      .attr("x", innerW + 8).attr("y", y(THRESHOLD) + 16)
       .attr("dominant-baseline", "central")
       .text("↓ Surplus");
 
-    // Line generator
-    const line = d3.line()
-      .x(d => x(d.i))
-      .y(d => y(d.score))
-      .defined(d => d.score != null);
-
-    const indexByWeek = new Map(WEEKS.map((wk, i) => [wk.w, i]));
-
-    // Render each active region. Lines drawn back-to-front in a stable order
-    // so the legend's color order matches the chart.
-    const regionsToDraw = REGIONS
-      .filter(r => activeRegions.has(r))
-      .sort((a, b) => a.localeCompare(b));
-
-    const linesG = g.append("g").attr("class", "lines-layer");
-    const dotsG = g.append("g").attr("class", "dots-layer");
-
-    regionsToDraw.forEach(region => {
-      const pts = seriesFor(region).map(p => ({ ...p, i: indexByWeek.get(p.w) }));
-      if (!pts.length) return;
-      const s = styleFor(region);
-      linesG.append("path")
-        .attr("class", "series-line")
-        .attr("data-region", region)
-        .attr("stroke", s.color)
-        .attr("stroke-dasharray", s.dash || null)
-        .attr("d", line(pts));
-      // dots help when a region only has data for sparse weeks
-      dotsG.selectAll(`.series-dot[data-r="${region}"]`)
-        .data(pts).enter()
-        .append("circle")
-        .attr("class", "series-dot")
-        .attr("data-r", region)
-        .attr("data-region", region)
-        .attr("cx", d => x(d.i))
-        .attr("cy", d => y(d.score))
-        .attr("r", 2.5)
-        .attr("fill", s.color);
-    });
-
-    if (regionsToDraw.length === 0) {
+    // Compute the weighted-average series
+    const series = aggregateWeekly();
+    const hasAny = series.some(p => p.score != null);
+    if (!hasAny) {
       g.append("text")
         .attr("class", "axis-text")
         .attr("x", innerW / 2).attr("y", innerH / 2)
         .attr("text-anchor", "middle")
         .attr("fill", "var(--ink-muted)")
-        .text("Select one or more regions above to see lines.");
+        .text(activeRegions.size === 0
+          ? "Select one or more regions above to see the average."
+          : "No availability data for the current commodity × region selection.");
       return;
     }
 
-    // Hover cursor + tooltip
+    const indexByWeek = new Map(WEEKS.map((wk, i) => [wk.w, i]));
+    const pts = series
+      .map(p => ({ ...p, i: indexByWeek.get(p.w) }))
+      .filter(p => p.score != null);
+
+    const line = d3.line()
+      .x(d => x(d.i))
+      .y(d => y(d.score));
+    g.append("path")
+      .attr("class", "avg-line")
+      .attr("d", line(pts));
+
+    g.append("g").attr("class", "avg-dots")
+      .selectAll("circle")
+      .data(pts).enter()
+      .append("circle")
+        .attr("class", "avg-dot")
+        .attr("cx", d => x(d.i))
+        .attr("cy", d => y(d.score))
+        .attr("r", 3.2);
+
+    // Hover overlay — vertical guide line + tooltip
     const hoverLine = g.append("line")
       .attr("class", "hover-line")
       .attr("y1", 0).attr("y2", innerH);
-    const hoverDotsG = g.append("g").attr("class", "hover-dots");
+    const hoverDot = g.append("circle")
+      .attr("class", "hover-dot")
+      .attr("r", 5)
+      .style("opacity", 0);
 
     const overlay = g.append("rect")
       .attr("x", 0).attr("y", 0)
@@ -768,7 +704,7 @@
 
     overlay.on("pointerleave", () => {
       hoverLine.classed("visible", false);
-      hoverDotsG.selectAll("*").remove();
+      hoverDot.style("opacity", 0);
       tooltip.style.opacity = "0";
     });
 
@@ -776,49 +712,37 @@
       const [mx] = d3.pointer(event, this);
       const iFloat = x.invert(mx);
       const iSnap = Math.max(0, Math.min(WEEKS.length - 1, Math.round(iFloat)));
-      const wk = WEEKS[iSnap];
-
       const snapX = x(iSnap);
+      const point = series[iSnap];
+
       hoverLine.attr("x1", snapX).attr("x2", snapX).classed("visible", true);
 
-      // Snapshot of every active region at this week.
-      const snapshot = [];
-      regionsToDraw.forEach(region => {
-        const cell = ((AVAILABILITY[currentCommodity] || {})[region] || {})[String(wk.w)];
-        if (cell) snapshot.push({ region, score: cell.score, n: cell.n, color: styleFor(region).color });
-      });
-      snapshot.sort((a, b) => b.score - a.score);
-
-      // Hover dots only on regions with data this week.
-      hoverDotsG.selectAll("*").remove();
-      snapshot.forEach(s => {
-        hoverDotsG.append("circle")
-          .attr("class", "hover-dot")
+      if (point.score != null) {
+        hoverDot
           .attr("cx", snapX)
-          .attr("cy", y(s.score))
-          .attr("r", 4)
-          .attr("stroke", s.color);
-      });
-
-      // Tooltip
-      const rows = snapshot.length
-        ? snapshot.map(s =>
-            `<div class="tt-row">
-               <span class="tt-swatch" style="background:${s.color}"></span>
-               <span class="tt-region">${s.region}</span>
-               <span class="tt-score">${s.score.toFixed(2)}</span>
-               <span class="tt-label">${SCORE_LABELS[Math.max(1, Math.min(5, Math.round(s.score)))]}</span>
-             </div>`).join("")
-        : `<div class="tt-row"><span class="tt-region">No data</span></div>`;
-      tooltip.innerHTML = `<strong>Week of ${wk.label}</strong>${rows}`;
+          .attr("cy", y(point.score))
+          .style("opacity", 1);
+        const label = SCORE_LABELS[Math.max(1, Math.min(5, Math.round(point.score)))];
+        tooltip.innerHTML =
+          `<strong>Week ${point.w}</strong>
+           <div class="tt-week-date">week of ${point.label}</div>
+           <div class="tt-score-big">${point.score.toFixed(2)}</div>
+           <div class="tt-label">${label}</div>
+           <div class="tt-meta">${point.regions} region${point.regions === 1 ? '' : 's'} · ${point.n.toLocaleString()} report${point.n === 1 ? '' : 's'}</div>`;
+      } else {
+        hoverDot.style("opacity", 0);
+        tooltip.innerHTML =
+          `<strong>Week ${WEEKS[iSnap].w}</strong>
+           <div class="tt-week-date">week of ${WEEKS[iSnap].label}</div>
+           <div class="tt-label" style="color:#d9d9d9">No data for this selection</div>`;
+      }
 
       const areaRect = chartArea.getBoundingClientRect();
-      // place tooltip near pointer but flip to the left if it would overflow
       const px = event.clientX - areaRect.left;
       const py = event.clientY - areaRect.top;
       const ttRect = tooltip.getBoundingClientRect();
-      const tw = ttRect.width || 220;
-      const th = ttRect.height || 80;
+      const tw = ttRect.width || 200;
+      const th = ttRect.height || 100;
       let left = px + 16;
       let top = py - th / 2;
       if (left + tw > areaRect.width - 8) left = px - tw - 16;
@@ -828,22 +752,6 @@
       tooltip.style.top = top + "px";
       tooltip.style.opacity = "1";
     });
-
-    applyHighlight();
-  }
-
-  function applyHighlight() {
-    const svg = d3.select(svgEl);
-    if (!highlightRegion) {
-      svg.selectAll(".series-line").classed("dimmed", false).classed("highlight", false);
-      svg.selectAll(".series-dot").classed("dimmed", false);
-      return;
-    }
-    svg.selectAll(".series-line")
-      .classed("dimmed", function() { return this.getAttribute("data-region") !== highlightRegion; })
-      .classed("highlight", function() { return this.getAttribute("data-region") === highlightRegion; });
-    svg.selectAll(".series-dot")
-      .classed("dimmed", function() { return this.getAttribute("data-region") !== highlightRegion; });
   }
 
   // ═══════════════════════════════════════════════════════════════
