@@ -334,15 +334,11 @@
 <div class="wrap">
 
   <div class="head">
-    <h1>Q3 Reefer Truck Availability — <span class="commodity-name" id="commodityName"></span></h1>
+    <h1>Q3 Reefer Truck Availability</h1>
     <div class="meta">{{ year_range }} 4-yr weekly avg · {{ build_date }}</div>
   </div>
 
   <div class="controls">
-    <div class="ctrl-row">
-      <label class="ctrl-label">Commodity</label>
-      <div class="pill-row" id="commodityPills"></div>
-    </div>
     <div class="ctrl-row">
       <label class="ctrl-label">Regions</label>
       <div class="pill-row" id="regionPills"></div>
@@ -374,7 +370,6 @@
   // INJECTED DATA
   // ═══════════════════════════════════════════════════════════════
   const AVAILABILITY = {{ availability_json | safe }};   // {commodity: {region: {week: {score,n}}}}
-  const COMMODITIES = {{ commodities_json | safe }};
   const REGIONS = {{ regions_json | safe }};
   const WEEKS = {{ weeks_json | safe }};                  // [{w, label, t}]
 
@@ -388,89 +383,8 @@
   // ═══════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════
-  let currentCommodity = ALL_COMMODITIES_KEY;
   // Mexico crossings default OFF for a cleaner US-shipping-region average.
   let activeRegions = new Set(REGIONS.filter(r => !r.startsWith("Mexico-")));
-  let featuredCommodities = [];
-  let dropdownCommodities = [];
-
-  // ═══════════════════════════════════════════════════════════════
-  // COMMODITY SELECTOR
-  // ═══════════════════════════════════════════════════════════════
-  function totalReports(commodity) {
-    const data = AVAILABILITY[commodity] || {};
-    let n = 0;
-    for (const r in data) {
-      for (const w in data[r]) n += data[r][w].n || 0;
-    }
-    return n;
-  }
-  function computeFeaturedCommodities() {
-    const individual = COMMODITIES.filter(c => c !== ALL_COMMODITIES_KEY);
-    const sorted = individual.slice().sort((a, b) => totalReports(b) - totalReports(a));
-    featuredCommodities = sorted.slice(0, 5);
-    dropdownCommodities = sorted.slice(5);
-  }
-
-  function renderCommodityPills() {
-    const el = document.getElementById("commodityPills");
-    const inDropdown = dropdownCommodities.includes(currentCommodity);
-    const morePillLabel = inDropdown
-      ? `${currentCommodity} <span class="chev">▾</span>`
-      : `More commodities <span class="chev">▾</span>`;
-
-    let html = "";
-    html += `<button class="pill ${currentCommodity===ALL_COMMODITIES_KEY?'active':''}" data-c="${ALL_COMMODITIES_KEY}">All Commodities</button>`;
-    featuredCommodities.forEach(c => {
-      html += `<button class="pill ${c===currentCommodity?'active':''}" data-c="${c}">${c}</button>`;
-    });
-    if (dropdownCommodities.length) {
-      html += `<span class="more-wrap" id="moreWrap">
-        <button class="pill more-pill ${inDropdown?'active':''}" id="morePill" aria-haspopup="true" aria-expanded="false">${morePillLabel}</button>
-        <div class="more-panel" id="morePanel" role="menu"></div>
-      </span>`;
-    }
-    el.innerHTML = html;
-
-    el.querySelectorAll(".pill[data-c]").forEach(b => {
-      b.addEventListener("click", () => {
-        currentCommodity = b.dataset.c;
-        closeDropdown();
-        renderCommodityPills();
-        renderChart();
-      });
-    });
-
-    if (dropdownCommodities.length) {
-      const panel = document.getElementById("morePanel");
-      panel.innerHTML = dropdownCommodities
-        .map(c => `<button class="more-item ${c===currentCommodity?'active':''}" data-c="${c}" role="menuitem">${c}</button>`)
-        .join("");
-      panel.querySelectorAll(".more-item").forEach(b => {
-        b.addEventListener("click", () => {
-          currentCommodity = b.dataset.c;
-          closeDropdown();
-          renderCommodityPills();
-          renderChart();
-        });
-      });
-      document.getElementById("morePill").addEventListener("click", (e) => {
-        e.stopPropagation();
-        const open = panel.classList.toggle("open");
-        e.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-    }
-  }
-  function closeDropdown() {
-    const panel = document.getElementById("morePanel");
-    if (panel) panel.classList.remove("open");
-    const pill = document.getElementById("morePill");
-    if (pill) pill.setAttribute("aria-expanded", "false");
-  }
-  document.addEventListener("click", (e) => {
-    const wrap = document.getElementById("moreWrap");
-    if (wrap && !wrap.contains(e.target)) closeDropdown();
-  });
 
   // ═══════════════════════════════════════════════════════════════
   // REGION SELECTOR (multi-select; scopes which regions feed the average)
@@ -519,7 +433,7 @@
     //   total_n += n
     //   regions_contributing += 1 if it had data this week
     // Then avg = sum / total_n.
-    const commodityData = AVAILABILITY[currentCommodity] || {};
+    const commodityData = AVAILABILITY[ALL_COMMODITIES_KEY] || {};
     const series = WEEKS.map(wk => {
       let sum = 0, totalN = 0, regionsHit = 0;
       activeRegions.forEach(region => {
@@ -548,8 +462,6 @@
   const innerH = H - M.top - M.bottom;
 
   function renderChart() {
-    document.getElementById("commodityName").textContent = currentCommodity;
-
     // Region summary line above the chart
     const summary = activeRegions.size === 0
       ? "no regions selected"
@@ -588,7 +500,8 @@
         .attr("y1", y(v)).attr("y2", y(v));
     });
 
-    // Y axis labels
+    // Y axis: integer score ticks only — the ordinal labels (Surplus, Adequate,
+    // Shortage) already live in the subtitle, no need to repeat them here.
     [1, 2, 3, 4, 5].forEach(v => {
       g.append("text")
         .attr("class", "axis-text")
@@ -596,11 +509,6 @@
         .attr("text-anchor", "end")
         .attr("dominant-baseline", "central")
         .text(v);
-      g.append("text")
-        .attr("class", "axis-label")
-        .attr("x", -10).attr("y", y(v) + 12)
-        .attr("text-anchor", "end")
-        .text(SCORE_LABELS[v]);
     });
 
     // X axis — week numbers (e.g. "Wk 27"), with the date label as a small
@@ -758,11 +666,6 @@
   // INIT
   // ═══════════════════════════════════════════════════════════════
   (function init() {
-    computeFeaturedCommodities();
-    if (!COMMODITIES.includes(ALL_COMMODITIES_KEY)) {
-      currentCommodity = COMMODITIES[0] || ALL_COMMODITIES_KEY;
-    }
-    renderCommodityPills();
     renderRegionPills();
     renderChart();
   })();
