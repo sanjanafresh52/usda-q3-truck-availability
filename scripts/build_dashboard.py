@@ -39,6 +39,7 @@ def main() -> None:
         availability_json=json.dumps(data["availability"]),
         commodities_json=json.dumps(data["commodities"]),
         regions_json=json.dumps(data["regions"]),
+        weeks_json=json.dumps(data["weeks"]),
         year_range=year_range,
         build_date=now.strftime("%b %d, %Y"),
     )

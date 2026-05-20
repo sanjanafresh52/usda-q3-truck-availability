@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Q3 Reefer Truck Availability — USDA Heat Map</title>
+<title>Q3 Reefer Truck Availability — USDA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 <style>
   :root {
     --bg: #ffffff;
@@ -17,26 +16,16 @@
     --ink-soft: #5a5a5a;
     --ink-muted: #9a9a9a;
     --rule: #e5e5e5;
+    --rule-soft: #f0f0f0;
 
-    --accent: #ec7700;          /* Mango Tango — selected/active state */
+    --accent: #ec7700;          /* Mango Tango */
     --accent-dark: #8c3f00;
-    --accent-darker: #5a2900;
     --accent-light: #fdf3e6;
     --accent-hover: #fbe9d3;
-    --green-marker: #4a8b2c;    /* surplus indicator (border-crossing dot) */
 
-    --no-data: #f0f0f0;
-    --mexico-fill: #f4f4f4;
-
-    /* Heat ramp: light cream (surplus, 1) → dark burnt-orange (shortage, 5) */
-    --heat-0: #fdf3e6;
-    --heat-1: #fbe2c2;
-    --heat-2: #f8c785;
-    --heat-3: #f4a64a;
-    --heat-4: #ec7700;
-    --heat-5: #c95c00;
-    --heat-6: #8c3f00;
-    --heat-7: #5a2900;
+    --threshold: #5a5a5a;       /* threshold line */
+    --shortage-bg: rgba(236, 119, 0, 0.04);
+    --surplus-bg: rgba(74, 139, 44, 0.04);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
@@ -52,7 +41,6 @@
 
   .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px 48px; }
 
-  /* header */
   .head {
     display: flex;
     justify-content: space-between;
@@ -77,7 +65,6 @@
     color: var(--ink-muted);
   }
 
-  /* controls */
   .controls {
     display: flex;
     flex-direction: column;
@@ -88,7 +75,7 @@
   }
   .ctrl-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 14px;
     flex-wrap: wrap;
   }
@@ -100,9 +87,30 @@
     text-transform: uppercase;
     color: var(--ink-muted);
     min-width: 96px;
+    padding-top: 8px;
   }
+  .ctrl-actions {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+    padding-top: 4px;
+  }
+  .ctrl-btn {
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .ctrl-btn:hover { background: var(--accent-hover); color: var(--accent-dark); }
 
-  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; flex: 1; min-width: 0; }
   .pill {
     border: 1px solid var(--rule);
     background: var(--bg);
@@ -115,20 +123,52 @@
     border-radius: 8px;
     transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
     white-space: nowrap;
+    position: relative;
   }
   .pill:hover { background: var(--accent-hover); border-color: var(--accent); }
   .pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
+  /* region pill carries a color swatch matching its line */
+  .pill.region-pill { padding-left: 28px; }
+  .pill.region-pill::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--swatch, #ccc);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+  }
+  .pill.region-pill.dashed::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 1.5px;
+    background: var(--bg);
+  }
+  .pill.region-pill.inactive {
+    color: var(--ink-muted);
+    background: var(--bg-soft);
+    opacity: 0.55;
+  }
+  .pill.region-pill.inactive::before { opacity: 0.55; }
+
   @media (prefers-reduced-motion: no-preference) {
     .pill {
       transition: transform 140ms ease, background-color 140ms ease, color 140ms ease,
-                  border-color 140ms ease, box-shadow 140ms ease;
+                  border-color 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
     }
     .pill:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
     .pill:active { transform: translateY(0); box-shadow: none; }
   }
 
-  /* "More" dropdown */
+  /* "More" dropdown (commodity) */
   .more-wrap { position: relative; display: inline-block; }
   .more-pill { display: inline-flex; align-items: center; gap: 4px; }
   .more-pill .chev { font-size: 10px; line-height: 1; }
@@ -166,7 +206,6 @@
   .more-item:hover { background: var(--accent-hover); }
   .more-item.active { background: var(--accent); color: #fff; font-weight: 600; }
 
-  /* viz header w/ segmented toggle */
   .viz-header {
     display: flex;
     justify-content: space-between;
@@ -181,149 +220,98 @@
     color: var(--ink);
     letter-spacing: 0.01em;
   }
-  .seg {
-    display: inline-flex;
-    height: 32px;
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--bg);
-  }
-  .seg-btn {
-    padding: 0 18px;
+  .viz-subtitle {
     font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    transition: background-color 160ms ease, color 160ms ease;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ink-muted);
   }
-  .seg-btn + .seg-btn { border-left: 1px solid var(--rule); }
-  .seg-btn.active { background: var(--accent); color: #fff; }
 
-  /* viz area + cross-fade */
-  .viz-area {
-    position: relative;
+  .chart-area {
     background: var(--bg);
     border: 1px solid var(--rule);
     border-radius: 8px;
-    padding: 12px;
-    display: grid;
-  }
-  .viz-pane {
-    grid-column: 1;
-    grid-row: 1;
-    opacity: 1;
-    transition: opacity 300ms ease;
-  }
-  .viz-pane.hidden { opacity: 0; pointer-events: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .viz-pane { transition: none; }
+    padding: 18px 14px 10px;
+    position: relative;
   }
 
-  /* map */
-  .map-container {
-    position: relative;
+  .chart-svg {
     width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
-  }
-  .us-map { width: 100%; height: auto; display: block; }
-  .us-map path.state {
-    stroke: #ffffff;
-    stroke-width: 0.8;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    cursor: pointer;
-    transition: stroke-width 120ms, stroke 120ms;
-  }
-  .us-map path.state:hover {
-    stroke: #1a1a1a;
-    stroke-width: 2;
-  }
-  .us-map .nation {
-    fill: none;
-    stroke: var(--ink);
-    stroke-width: 0.8;
-    pointer-events: none;
-  }
-  .us-map .mexico-shape {
-    fill: var(--mexico-fill);
-    stroke: #9a9a9a;
-    stroke-width: 1;
-  }
-  .us-map .mexico-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    fill: var(--ink-muted);
-    pointer-events: none;
+    height: auto;
+    display: block;
   }
 
-  /* label boxes (region + state) */
-  .lbl-bg {
-    fill: rgba(255,255,255,0.92);
-    stroke: var(--rule);
-    stroke-width: 0.5;
-  }
-  .lbl-text {
+  /* axis text */
+  .axis-text {
     font-family: 'Open Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .axis-label {
+    font-family: 'Montserrat', sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.08em;
-    fill: var(--ink);
     text-transform: uppercase;
-    pointer-events: none;
+    fill: var(--ink-muted);
   }
-  .lbl-leader {
-    fill: none;
-    stroke: var(--ink-muted);
-    stroke-width: 0.6;
-  }
+  .axis-line { stroke: var(--ink); stroke-width: 0.8; }
+  .gridline { stroke: var(--rule-soft); stroke-width: 1; shape-rendering: crispEdges; }
 
-  /* border crossings */
-  .xing-marker {
-    fill: var(--accent);
-    stroke: #fff;
-    stroke-width: 1.4;
+  /* threshold line */
+  .threshold-line {
+    stroke: var(--threshold);
+    stroke-width: 1.2;
+    stroke-dasharray: 6 4;
+    fill: none;
   }
-  .xing-connector { fill: none; stroke: var(--accent); stroke-width: 0.8; }
-  .xing-card-bg {
-    fill: rgba(255,255,255,0.96);
-    stroke: var(--accent);
-    stroke-width: 0.8;
-  }
-  .xing-card-name {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 9.5px;
-    font-weight: 600;
-    fill: var(--ink);
-    letter-spacing: 0.04em;
+  .threshold-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    pointer-events: none;
+    fill: var(--threshold);
   }
-  .xing-card-vol {
+  .zone-label {
     font-family: 'Open Sans', sans-serif;
     font-size: 10px;
     font-weight: 600;
-    fill: var(--accent);
-    pointer-events: none;
-    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    fill: var(--ink-muted);
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .xing-marker {
-      transform-origin: center;
-      transform-box: fill-box;
-      animation: xing-pulse 1100ms cubic-bezier(.22,.61,.36,1) 1 both;
-    }
-    @keyframes xing-pulse {
-      0%   { transform: scale(0.2); opacity: 0; }
-      55%  { transform: scale(1.45); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+
+  /* lines + dots */
+  .series-line {
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    transition: opacity 140ms ease, stroke-width 140ms ease;
+  }
+  .series-line.dimmed { opacity: 0.18; }
+  .series-line.highlight { stroke-width: 3; }
+  .series-dot {
+    transition: opacity 140ms ease, r 140ms ease;
+  }
+  .series-dot.dimmed { opacity: 0.15; }
+
+  /* hover cursor */
+  .hover-line {
+    stroke: var(--ink);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .hover-line.visible { opacity: 0.5; }
+  .hover-dot {
+    fill: var(--bg);
+    stroke-width: 2;
+    pointer-events: none;
   }
 
   /* tooltip */
@@ -331,134 +319,45 @@
     position: absolute;
     background: var(--ink);
     color: #fff;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-radius: 6px;
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     font-weight: 400;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 100ms;
+    transition: opacity 120ms;
     z-index: 40;
     box-shadow: 0 4px 12px rgba(0,0,0,0.18);
     line-height: 1.4;
-    white-space: nowrap;
-    transform: translate(-50%, -100%);
     font-variant-numeric: tabular-nums;
+    max-width: 280px;
   }
   .tooltip strong {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
     font-weight: 600;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    padding-bottom: 4px;
   }
-  .tooltip .tt-detail { font-size: 11px; color: #f8c785; }
-
-  /* chart view */
-  .chart-svg {
-    width: 100%;
-    max-width: 80%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  .chart-row-label {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    fill: var(--ink);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .chart-row-value {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    fill: var(--ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .chart-bar { cursor: pointer; transition: opacity 120ms; }
-  .chart-bar:hover { opacity: 0.85; }
-  .chart-empty {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    fill: var(--ink-muted);
-    text-anchor: middle;
-  }
-
-  .viz-layout { display: block; }
-  .viz-layout.chart-active .legend-horizontal { display: none; }
-
-  /* horizontal legend above map */
-  .legend-horizontal {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 10px 14px;
-    background: var(--bg);
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-  .legend-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    white-space: nowrap;
-  }
-  .legend-mid {
+  .tt-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 1;
-    min-width: 260px;
+    font-size: 11.5px;
+    line-height: 1.5;
   }
-  .legend-bar-horiz {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    height: 12px;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--rule);
+  .tt-swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
-  .legend-bar-horiz > div { flex: 1; }
-  .legend-ends-horiz {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--ink-muted);
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-  .legend-current {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--ink-soft);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-left: 1px solid var(--rule);
-    padding-left: 14px;
-    white-space: nowrap;
-  }
-  .legend-current strong {
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink);
-    text-transform: none;
-    letter-spacing: 0;
-    font-variant-numeric: tabular-nums;
-    margin-top: 2px;
-    line-height: 1.3;
-  }
+  .tt-region { flex: 1; color: #f8c785; }
+  .tt-score { font-weight: 700; min-width: 30px; text-align: right; }
+  .tt-label { font-size: 10.5px; color: #d9d9d9; min-width: 88px; text-align: right; }
 
   .source {
     margin-top: 16px;
@@ -469,7 +368,7 @@
   }
 
   @media print {
-    .controls, .viz-header { display: none; }
+    .controls .ctrl-actions { display: none; }
     body { background: white; }
   }
 </style>
@@ -479,8 +378,8 @@
 <div class="wrap">
 
   <div class="head">
-    <h1>Q3 Reefer Truck Availability by Region — <span class="commodity-name" id="commodityName"></span></h1>
-    <div class="meta">{{ year_range }} 4-yr avg · {{ build_date }}</div>
+    <h1>Q3 Reefer Truck Availability — <span class="commodity-name" id="commodityName"></span></h1>
+    <div class="meta">{{ year_range }} 4-yr weekly avg · {{ build_date }}</div>
   </div>
 
   <div class="controls">
@@ -489,52 +388,25 @@
       <div class="pill-row" id="commodityPills"></div>
     </div>
     <div class="ctrl-row">
-      <label class="ctrl-label">Q3 Month</label>
-      <div class="pill-row" id="monthPills">
-        <button class="pill active" data-month="all">Full Q3</button>
-        <button class="pill" data-month="jul">Jul</button>
-        <button class="pill" data-month="aug">Aug</button>
-        <button class="pill" data-month="sep">Sep</button>
+      <label class="ctrl-label">Regions</label>
+      <div class="pill-row" id="regionPills"></div>
+      <div class="ctrl-actions">
+        <button class="ctrl-btn" id="regionsAll">All</button>
+        <button class="ctrl-btn" id="regionsNone">None</button>
       </div>
     </div>
   </div>
 
   <div class="viz-header">
-    <div class="viz-title">Regional Truck Availability (1 = Surplus · 5 = Shortage)</div>
-    <div class="seg" role="tablist" aria-label="View toggle">
-      <button class="seg-btn active" data-view="map" role="tab" aria-selected="true">Map</button>
-      <button class="seg-btn" data-view="chart" role="tab" aria-selected="false">Chart</button>
+    <div>
+      <div class="viz-title">Weekly availability score, Jul–Sep</div>
+      <div class="viz-subtitle">1 = Surplus · 3 = Adequate (threshold) · 5 = Shortage</div>
     </div>
   </div>
 
-  <div class="viz-layout">
-    <div class="legend-horizontal">
-      <div class="legend-label">Availability — Surplus → Shortage</div>
-      <div class="legend-mid">
-        <span class="legend-ends-horiz" id="legendLow">1 · Surplus</span>
-        <div class="legend-bar-horiz" id="legendBar"></div>
-        <span class="legend-ends-horiz" id="legendHigh">5 · Shortage</span>
-      </div>
-      <div class="legend-current" id="legendCurrent"></div>
-    </div>
-
-    <div class="viz-area">
-      <div class="viz-pane" id="mapPane">
-        <div class="map-container">
-          <svg class="us-map" viewBox="0 0 975 970" preserveAspectRatio="xMidYMid meet">
-            <g id="mexicoShapeG"></g>
-            <g id="statesG"></g>
-            <path class="nation" id="nationPath"></path>
-            <g id="labelsG"></g>
-            <g id="crossingsG"></g>
-          </svg>
-          <div class="tooltip" id="tooltip"></div>
-        </div>
-      </div>
-      <div class="viz-pane hidden" id="chartPane" aria-hidden="true">
-        <svg class="chart-svg" id="chartSvg" viewBox="0 0 960 560" preserveAspectRatio="xMidYMid meet"></svg>
-      </div>
-    </div>
+  <div class="chart-area">
+    <svg class="chart-svg" id="chartSvg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="tooltip" id="tooltip"></div>
   </div>
 
   <div class="source">Source: USDA AMS Refrigerated Truck Rates and Availability · agtransport.usda.gov/acar-e3r8 · scale: 1=Surplus, 2=Slight Surplus, 3=Adequate, 4=Slight Shortage, 5=Shortage</div>
@@ -544,151 +416,62 @@
   // ═══════════════════════════════════════════════════════════════
   // INJECTED DATA
   // ═══════════════════════════════════════════════════════════════
-  const AVAILABILITY = {{ availability_json | safe }};   // {commodity: {region: {jul,aug,sep,n_jul,n_aug,n_sep}}}
+  const AVAILABILITY = {{ availability_json | safe }};   // {commodity: {region: {week: {score,n}}}}
   const COMMODITIES = {{ commodities_json | safe }};
   const REGIONS = {{ regions_json | safe }};
+  const WEEKS = {{ weeks_json | safe }};                  // [{w, label, t}]
 
   const ALL_COMMODITIES_KEY = "All Commodities";
   const SCORE_LABELS = {
     1: "Surplus", 2: "Slight Surplus", 3: "Adequate",
     4: "Slight Shortage", 5: "Shortage",
   };
+  const THRESHOLD = 3;
 
-  // ═══════════════════════════════════════════════════════════════
-  // STATE → REGION
-  // ═══════════════════════════════════════════════════════════════
-  const STATE_TO_REGION = {
-    "Arizona":     "Arizona",
-    "California":  "California",
-    "Colorado":    "Colorado",
-    "Florida":     "Florida",
-    "New York":    "New York",
-    "Texas":       "Texas",
-    "Michigan":    "Great Lakes",
-    "Minnesota":   "Great Lakes",
-    "Wisconsin":   "Great Lakes",
-    "Ohio":        "Great Lakes",
-    "Indiana":     "Great Lakes",
-    "Illinois":    "Great Lakes",
-    "Pennsylvania":  "Mid-Atlantic",
-    "New Jersey":    "Mid-Atlantic",
-    "Delaware":      "Mid-Atlantic",
-    "Maryland":      "Mid-Atlantic",
-    "Virginia":      "Mid-Atlantic",
-    "West Virginia": "Mid-Atlantic",
-    "Washington":  "PNW",
-    "Oregon":      "PNW",
-    "Idaho":       "PNW",
-    "North Carolina":  "Southeast",
-    "South Carolina":  "Southeast",
-    "Georgia":         "Southeast",
-    "Alabama":         "Southeast",
-    "Tennessee":       "Southeast",
-    "Kentucky":        "Southeast",
+  // Region → stroke style. d3.schemeTableau10 plus dashed variants for Mexico
+  // crossings so they remain visually grouped with their US counterpart.
+  const REGION_STYLE = {
+    "California":        { color: "#4E79A7", dash: null },
+    "PNW":               { color: "#59A14F", dash: null },
+    "Florida":           { color: "#E15759", dash: null },
+    "Texas":             { color: "#F28E2B", dash: null },
+    "Southeast":         { color: "#76B7B2", dash: null },
+    "Mid-Atlantic":      { color: "#B07AA1", dash: null },
+    "Great Lakes":       { color: "#9C755F", dash: null },
+    "New York":          { color: "#EDC948", dash: null },
+    "Arizona":           { color: "#FF9DA7", dash: null },
+    "Colorado":          { color: "#BAB0AC", dash: null },
+    "Mexico-California": { color: "#4E79A7", dash: "5 4" },
+    "Mexico-Arizona":    { color: "#FF9DA7", dash: "5 4" },
+    "Mexico-New Mexico": { color: "#B07AA1", dash: "5 4" },
+    "Mexico-Texas":      { color: "#F28E2B", dash: "5 4" },
   };
-
-  const REGION_LABELS = [
-    { region: "PNW",          x: 195, y: 130, text: "PNW" },
-    { region: "California",   x: 110, y: 270, text: "CALIF" },
-    { region: "Arizona",      x: 235, y: 360, text: "ARIZ" },
-    { region: "Colorado",     x: 345, y: 290, text: "COLO" },
-    { region: "Texas",        x: 470, y: 450, text: "TEXAS" },
-    { region: "Great Lakes",  x: 605, y: 205, text: "GREAT LAKES" },
-    { region: "New York",     x: 845, y: 155, text: "NY",      leader: { x: 805, y: 180 } },
-    { region: "Mid-Atlantic", x: 880, y: 250, text: "MID-ATL", leader: { x: 800, y: 225 } },
-    { region: "Southeast",    x: 705, y: 380, text: "SE" },
-    { region: "Florida",      x: 800, y: 510, text: "FLA" },
-  ];
-
-  const MEXICO_CROSSINGS = [
-    { region: "Mexico-California", name: "Otay Mesa",       marker: { x: 101, y: 402 }, card: { x:  95, y: 427 } },
-    { region: "Mexico-Arizona",    name: "Nogales",         marker: { x: 211, y: 451 }, card: { x: 200, y: 479 } },
-    { region: "Mexico-New Mexico", name: "Santa Teresa",    marker: { x: 285, y: 450 }, card: { x: 280, y: 488 } },
-    { region: "Mexico-Texas",      name: "Laredo / Pharr",  marker: { x: 440, y: 574 }, card: { x: 434, y: 606 } },
-  ];
+  const FALLBACK_STYLE = { color: "#888", dash: null };
+  function styleFor(region) { return REGION_STYLE[region] || FALLBACK_STYLE; }
 
   // ═══════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════
   let currentCommodity = ALL_COMMODITIES_KEY;
-  let currentMonth = "all";
-  let currentView = "map";
-  let topology = null;
-  let statePaths = null;
-  let contiguousNationFeature = null;
+  // Mexico crossings default OFF to keep the initial view clean — toggle on via chip.
+  let activeRegions = new Set(REGIONS.filter(r => !r.startsWith("Mexico-")));
   let featuredCommodities = [];
   let dropdownCommodities = [];
-
-  // ═══════════════════════════════════════════════════════════════
-  // HELPERS
-  // ═══════════════════════════════════════════════════════════════
-  function fmtScore(v) {
-    if (v == null || isNaN(v)) return "—";
-    return v.toFixed(2);
-  }
-  function scoreLabel(v) {
-    if (v == null || isNaN(v)) return "no data";
-    return SCORE_LABELS[Math.max(1, Math.min(5, Math.round(v)))];
-  }
-  function getRegionValue(region, commodity, month) {
-    const d = AVAILABILITY[commodity]?.[region];
-    if (!d) return null;
-    if (month === "all") {
-      // Weight by report count when rolling up the three months — gives a more
-      // representative quarterly mean if one month has many more observations.
-      const n = (d.n_jul || 0) + (d.n_aug || 0) + (d.n_sep || 0);
-      if (n === 0) return null;
-      const sum = (d.jul || 0) * (d.n_jul || 0)
-                + (d.aug || 0) * (d.n_aug || 0)
-                + (d.sep || 0) * (d.n_sep || 0);
-      return sum / n;
-    }
-    return d[month] == null ? null : d[month];
-  }
-  function getRegionReportCount(region, commodity, month) {
-    const d = AVAILABILITY[commodity]?.[region];
-    if (!d) return 0;
-    if (month === "all") return (d.n_jul || 0) + (d.n_aug || 0) + (d.n_sep || 0);
-    return d["n_" + month] || 0;
-  }
-  function regionWeightForRanking(commodity) {
-    // Pick a "leading" or "tightest" region only from those with enough
-    // observations — single-report regions can have wild mean swings.
-    const data = AVAILABILITY[commodity] || {};
-    return Object.keys(data);
-  }
-  function heatColor(value) {
-    if (value == null || isNaN(value)) return "var(--no-data)";
-    // Fixed 1-5 scale → 8 bins so the ramp is interpretable regardless of the
-    // current commodity's range. Most lanes report 3 (Adequate), so values
-    // clustering mid-ramp is expected.
-    const t = Math.max(0, Math.min(1, (value - 1) / 4));
-    if (t >= 0.875) return "var(--heat-7)";
-    if (t >= 0.75)  return "var(--heat-6)";
-    if (t >= 0.625) return "var(--heat-5)";
-    if (t >= 0.50)  return "var(--heat-4)";
-    if (t >= 0.375) return "var(--heat-3)";
-    if (t >= 0.25)  return "var(--heat-2)";
-    if (t >= 0.125) return "var(--heat-1)";
-    return "var(--heat-0)";
-  }
+  let highlightRegion = null;  // hover-highlight from chip
 
   // ═══════════════════════════════════════════════════════════════
   // COMMODITY SELECTOR
   // ═══════════════════════════════════════════════════════════════
+  function totalReports(commodity) {
+    const data = AVAILABILITY[commodity] || {};
+    let n = 0;
+    for (const r in data) {
+      for (const w in data[r]) n += data[r][w].n || 0;
+    }
+    return n;
+  }
   function computeFeaturedCommodities() {
     const individual = COMMODITIES.filter(c => c !== ALL_COMMODITIES_KEY);
-    // Rank by total report count across all regions/months — proxy for
-    // coverage, since this dataset has no volume column.
-    const totalReports = c => {
-      const data = AVAILABILITY[c] || {};
-      let n = 0;
-      for (const r in data) {
-        const v = data[r];
-        n += (v.n_jul || 0) + (v.n_aug || 0) + (v.n_sep || 0);
-      }
-      return n;
-    };
     const sorted = individual.slice().sort((a, b) => totalReports(b) - totalReports(a));
     featuredCommodities = sorted.slice(0, 5);
     dropdownCommodities = sorted.slice(5);
@@ -719,7 +502,7 @@
         currentCommodity = b.dataset.c;
         closeDropdown();
         renderCommodityPills();
-        renderAll();
+        renderChart();
       });
     });
 
@@ -733,7 +516,7 @@
           currentCommodity = b.dataset.c;
           closeDropdown();
           renderCommodityPills();
-          renderAll();
+          renderChart();
         });
       });
       document.getElementById("morePill").addEventListener("click", (e) => {
@@ -743,7 +526,6 @@
       });
     }
   }
-
   function closeDropdown() {
     const panel = document.getElementById("morePanel");
     if (panel) panel.classList.remove("open");
@@ -755,338 +537,326 @@
     if (wrap && !wrap.contains(e.target)) closeDropdown();
   });
 
-  function bindMonthPills() {
-    document.querySelectorAll("#monthPills .pill").forEach(b => {
+  // ═══════════════════════════════════════════════════════════════
+  // REGION SELECTOR
+  // ═══════════════════════════════════════════════════════════════
+  function renderRegionPills() {
+    const el = document.getElementById("regionPills");
+    // Sort: US regions first (alpha), then Mexico crossings.
+    const ordered = REGIONS.slice().sort((a, b) => {
+      const ax = a.startsWith("Mexico-") ? 1 : 0;
+      const bx = b.startsWith("Mexico-") ? 1 : 0;
+      if (ax !== bx) return ax - bx;
+      return a.localeCompare(b);
+    });
+    el.innerHTML = ordered.map(r => {
+      const s = styleFor(r);
+      const active = activeRegions.has(r);
+      const classes = ["pill", "region-pill"];
+      if (!active) classes.push("inactive");
+      if (s.dash) classes.push("dashed");
+      return `<button class="${classes.join(' ')}" data-r="${r}" style="--swatch:${s.color}">${r}</button>`;
+    }).join("");
+
+    el.querySelectorAll(".pill[data-r]").forEach(b => {
       b.addEventListener("click", () => {
-        document.querySelectorAll("#monthPills .pill").forEach(p => p.classList.remove("active"));
-        b.classList.add("active");
-        currentMonth = b.dataset.month;
-        renderAll();
+        const r = b.dataset.r;
+        if (activeRegions.has(r)) activeRegions.delete(r);
+        else activeRegions.add(r);
+        renderRegionPills();
+        renderChart();
+      });
+      b.addEventListener("mouseenter", () => {
+        highlightRegion = b.dataset.r;
+        applyHighlight();
+      });
+      b.addEventListener("mouseleave", () => {
+        highlightRegion = null;
+        applyHighlight();
       });
     });
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // VIEW TOGGLE
-  // ═══════════════════════════════════════════════════════════════
-  function bindViewToggle() {
-    document.querySelectorAll(".seg-btn").forEach(b => {
-      b.addEventListener("click", () => {
-        if (b.classList.contains("active")) return;
-        document.querySelectorAll(".seg-btn").forEach(p => {
-          p.classList.remove("active");
-          p.setAttribute("aria-selected", "false");
-        });
-        b.classList.add("active");
-        b.setAttribute("aria-selected", "true");
-        currentView = b.dataset.view;
-        const mapPane = document.getElementById("mapPane");
-        const chartPane = document.getElementById("chartPane");
-        const vizLayout = document.querySelector(".viz-layout");
-        if (currentView === "map") {
-          chartPane.classList.add("hidden");
-          chartPane.setAttribute("aria-hidden", "true");
-          mapPane.classList.remove("hidden");
-          mapPane.setAttribute("aria-hidden", "false");
-          vizLayout.classList.remove("chart-active");
-        } else {
-          mapPane.classList.add("hidden");
-          mapPane.setAttribute("aria-hidden", "true");
-          chartPane.classList.remove("hidden");
-          chartPane.setAttribute("aria-hidden", "false");
-          vizLayout.classList.add("chart-active");
-        }
-      });
-    });
-  }
+  document.getElementById("regionsAll").addEventListener("click", () => {
+    activeRegions = new Set(REGIONS);
+    renderRegionPills();
+    renderChart();
+  });
+  document.getElementById("regionsNone").addEventListener("click", () => {
+    activeRegions = new Set();
+    renderRegionPills();
+    renderChart();
+  });
 
   // ═══════════════════════════════════════════════════════════════
-  // MAP
+  // CHART
   // ═══════════════════════════════════════════════════════════════
-  async function loadTopology() {
-    const [usRes, worldRes] = await Promise.all([
-      fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json"),
-      fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"),
-    ]);
-    topology = await usRes.json();
-    const worldTopo = await worldRes.json();
+  const svgEl = document.getElementById("chartSvg");
+  const tooltip = document.getElementById("tooltip");
+  const chartArea = document.querySelector(".chart-area");
 
-    const contiguousGeoms = topology.objects.states.geometries
-      .filter(g => g.id !== "02" && g.id !== "15");
-    statePaths = contiguousGeoms.map(g => topojson.feature(topology, g));
-    contiguousNationFeature = topojson.merge(topology, contiguousGeoms);
+  // Layout constants. viewBox = 960 × 480.
+  const W = 960, H = 480;
+  const M = { top: 24, right: 110, bottom: 56, left: 56 };
+  const innerW = W - M.left - M.right;
+  const innerH = H - M.top - M.bottom;
 
-    const path = d3.geoPath();
-    document.getElementById("nationPath").setAttribute("d", path(contiguousNationFeature));
-
-    const albers = d3.geoAlbers()
-      .scale(1300)
-      .translate([487.5, 305]);
-    const albersPath = d3.geoPath(albers);
-
-    const countries = topojson.feature(worldTopo, worldTopo.objects.countries).features;
-    const mexicoFeature = countries.find(
-      f => f.id === "484" || f.id === 484 || (f.properties && f.properties.name === "Mexico")
-    );
-
-    const mexicoG = document.getElementById("mexicoShapeG");
-    if (mexicoFeature) {
-      const d = albersPath(mexicoFeature);
-      mexicoG.innerHTML =
-        `<path class="mexico-shape" d="${d}" />
-         <text class="mexico-label" x="430" y="740" text-anchor="middle">MEXICO</text>`;
-    } else {
-      mexicoG.innerHTML = "";
-    }
-  }
-
-  function appendLabelBox(parent, x, y, text, leader) {
-    const g = parent.append("g").attr("class", "label-group");
-    if (leader) {
-      g.append("line")
-        .attr("class", "lbl-leader")
-        .attr("x1", x).attr("y1", y)
-        .attr("x2", leader.x).attr("y2", leader.y);
-      g.append("circle")
-        .attr("cx", leader.x).attr("cy", leader.y).attr("r", 1.5)
-        .attr("fill", "var(--ink-muted)");
-    }
-    const t = g.append("text")
-      .attr("class", "lbl-text")
-      .attr("x", x).attr("y", y)
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "central")
-      .text(text);
-    const bbox = t.node().getBBox();
-    const padX = 6, padY = 3;
-    g.insert("rect", "text")
-      .attr("class", "lbl-bg")
-      .attr("x", bbox.x - padX)
-      .attr("y", bbox.y - padY)
-      .attr("width", bbox.width + padX * 2)
-      .attr("height", bbox.height + padY * 2)
-      .attr("rx", 4).attr("ry", 4);
-  }
-
-  function renderMap() {
-    const path = d3.geoPath();
-    const statesG = d3.select("#statesG");
-
-    const regionValues = {};
-    const regionCounts = {};
-    REGIONS.forEach(r => {
-      regionValues[r] = getRegionValue(r, currentCommodity, currentMonth);
-      regionCounts[r] = getRegionReportCount(r, currentCommodity, currentMonth);
-    });
-
-    const tooltip = document.getElementById("tooltip");
-    const mapEl = document.querySelector("#mapPane .map-container");
-
-    const states = statesG.selectAll("path.state").data(statePaths, d => d.id);
-    states.enter()
-      .append("path")
-      .attr("class", "state")
-      .attr("d", path)
-      .merge(states)
-      .attr("fill", d => {
-        const region = STATE_TO_REGION[d.properties.name];
-        if (!region) return "var(--no-data)";
-        return heatColor(regionValues[region]);
+  function seriesFor(region) {
+    const regionData = (AVAILABILITY[currentCommodity] || {})[region] || {};
+    return WEEKS
+      .map(wk => {
+        const cell = regionData[String(wk.w)];
+        if (!cell) return null;
+        return { w: wk.w, label: wk.label, score: cell.score, n: cell.n };
       })
-      .on("mouseenter", function(event, d) {
-        d3.select(this).raise();
-        const region = STATE_TO_REGION[d.properties.name];
-        const v = region ? regionValues[region] : null;
-        const n = region ? regionCounts[region] : 0;
-        if (region) {
-          tooltip.innerHTML = `<strong>${d.properties.name}</strong>
-            <div class="tt-detail">${region} · ${fmtScore(v)} · ${scoreLabel(v)}${n ? ` <span style="opacity:0.7">(n=${n})</span>` : ''}</div>`;
-        } else {
-          tooltip.innerHTML = `<strong>${d.properties.name}</strong>
-            <div class="tt-detail">Not in AMS shipping districts</div>`;
-        }
-        tooltip.style.opacity = "1";
-      })
-      .on("mousemove", function(event) {
-        const rect = mapEl.getBoundingClientRect();
-        tooltip.style.left = (event.clientX - rect.left) + "px";
-        tooltip.style.top  = (event.clientY - rect.top - 12) + "px";
-      })
-      .on("mouseleave", () => { tooltip.style.opacity = "0"; });
-    states.exit().remove();
-
-    const labelsG = d3.select("#labelsG");
-    labelsG.selectAll("*").remove();
-    REGION_LABELS.forEach(l => {
-      appendLabelBox(labelsG, l.x, l.y, l.text, l.leader);
-    });
-
-    const crossingsG = d3.select("#crossingsG");
-    crossingsG.selectAll("*").remove();
-    MEXICO_CROSSINGS.forEach(xc => {
-      const v = regionValues[xc.region];
-      const n = regionCounts[xc.region];
-
-      crossingsG.append("line")
-        .attr("class", "xing-connector")
-        .attr("x1", xc.marker.x).attr("y1", xc.marker.y)
-        .attr("x2", xc.card.x + 55).attr("y2", xc.card.y);
-
-      const g = crossingsG.append("g").attr("class", "xing-card");
-      const name = g.append("text")
-        .attr("class", "xing-card-name")
-        .attr("x", xc.card.x + 55).attr("y", xc.card.y + 11)
-        .attr("text-anchor", "middle")
-        .text(xc.name);
-      g.append("text")
-        .attr("class", "xing-card-vol")
-        .attr("x", xc.card.x + 55).attr("y", xc.card.y + 26)
-        .attr("text-anchor", "middle")
-        .text(fmtScore(v));
-      const nameBB = name.node().getBBox();
-      const cardW = Math.max(nameBB.width + 16, 100);
-      g.insert("rect", "text")
-        .attr("class", "xing-card-bg")
-        .attr("x", xc.card.x + 55 - cardW / 2)
-        .attr("y", xc.card.y - 2)
-        .attr("width", cardW)
-        .attr("height", 34)
-        .attr("rx", 6).attr("ry", 6);
-
-      crossingsG.append("circle")
-        .attr("class", "xing-marker")
-        .attr("cx", xc.marker.x).attr("cy", xc.marker.y).attr("r", 5)
-        .on("mouseenter", function(event) {
-          tooltip.innerHTML = `<strong>${xc.name}</strong>
-            <div class="tt-detail">${xc.region} · ${fmtScore(v)} · ${scoreLabel(v)}${n ? ` <span style="opacity:0.7">(n=${n})</span>` : ''}</div>`;
-          tooltip.style.opacity = "1";
-        })
-        .on("mousemove", function(event) {
-          const rect = mapEl.getBoundingClientRect();
-          tooltip.style.left = (event.clientX - rect.left) + "px";
-          tooltip.style.top  = (event.clientY - rect.top - 12) + "px";
-        })
-        .on("mouseleave", () => { tooltip.style.opacity = "0"; });
-    });
-
-    return { regionValues, regionCounts };
+      .filter(p => p !== null);
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // CHART — horizontal bars ranked by availability score desc (tightest first)
-  // ═══════════════════════════════════════════════════════════════
-  function renderChart(regionValues, regionCounts) {
-    const svg = d3.select("#chartSvg");
+  function renderChart() {
+    document.getElementById("commodityName").textContent = currentCommodity;
+    const svg = d3.select(svgEl);
     svg.selectAll("*").remove();
 
-    const W = 960, H = 970, marginL = 150, marginR = 130, marginT = 16, marginB = 16;
-    const rows = REGIONS
-      .map(r => ({ region: r, value: regionValues[r], n: regionCounts[r] || 0 }))
-      // Regions with data first (tightest at top), then no-data regions.
-      .sort((a, b) => {
-        if (a.value == null && b.value == null) return 0;
-        if (a.value == null) return 1;
-        if (b.value == null) return -1;
-        return b.value - a.value;
-      });
+    // X scale: index over the WEEKS array (so even sparse weeks render evenly).
+    const x = d3.scaleLinear()
+      .domain([0, Math.max(WEEKS.length - 1, 1)])
+      .range([0, innerW]);
+    const y = d3.scaleLinear()
+      .domain([1, 5])
+      .range([innerH, 0]);
 
-    svg.attr("viewBox", `0 0 ${W} ${H}`);
+    const g = svg.append("g").attr("transform", `translate(${M.left},${M.top})`);
 
-    const haveData = rows.some(r => r.value != null);
-    if (!haveData) {
-      svg.append("text").attr("class", "chart-empty").attr("x", W/2).attr("y", H/2).text("No availability data for current selection");
+    // Zone tints — subtle wash above/below threshold for fast pattern reading.
+    g.append("rect")
+      .attr("x", 0).attr("y", 0)
+      .attr("width", innerW).attr("height", y(THRESHOLD))
+      .attr("fill", "var(--shortage-bg)");
+    g.append("rect")
+      .attr("x", 0).attr("y", y(THRESHOLD))
+      .attr("width", innerW).attr("height", innerH - y(THRESHOLD))
+      .attr("fill", "var(--surplus-bg)");
+
+    // Horizontal gridlines at integer scores.
+    [1, 2, 3, 4, 5].forEach(v => {
+      g.append("line")
+        .attr("class", "gridline")
+        .attr("x1", 0).attr("x2", innerW)
+        .attr("y1", y(v)).attr("y2", y(v));
+    });
+
+    // Y axis: integer ticks 1..5 with score labels.
+    [1, 2, 3, 4, 5].forEach(v => {
+      g.append("text")
+        .attr("class", "axis-text")
+        .attr("x", -10).attr("y", y(v))
+        .attr("text-anchor", "end")
+        .attr("dominant-baseline", "central")
+        .text(v);
+      g.append("text")
+        .attr("class", "axis-label")
+        .attr("x", -10).attr("y", y(v) + 12)
+        .attr("text-anchor", "end")
+        .text(SCORE_LABELS[v]);
+    });
+
+    // X axis: week labels. Skip every other one if crowded.
+    const tickEvery = WEEKS.length > 8 ? 2 : 1;
+    WEEKS.forEach((wk, i) => {
+      g.append("line")
+        .attr("class", "gridline")
+        .attr("x1", x(i)).attr("x2", x(i))
+        .attr("y1", 0).attr("y2", innerH)
+        .attr("opacity", 0.4);
+      if (i % tickEvery === 0 || i === WEEKS.length - 1) {
+        g.append("text")
+          .attr("class", "axis-text")
+          .attr("x", x(i)).attr("y", innerH + 18)
+          .attr("text-anchor", "middle")
+          .text(wk.label);
+      }
+    });
+
+    // Axis lines
+    g.append("line").attr("class", "axis-line")
+      .attr("x1", 0).attr("x2", innerW).attr("y1", innerH).attr("y2", innerH);
+    g.append("line").attr("class", "axis-line")
+      .attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", innerH);
+
+    // Threshold line at y=3.
+    g.append("line")
+      .attr("class", "threshold-line")
+      .attr("x1", 0).attr("x2", innerW)
+      .attr("y1", y(THRESHOLD)).attr("y2", y(THRESHOLD));
+    g.append("text")
+      .attr("class", "threshold-label")
+      .attr("x", innerW + 8).attr("y", y(THRESHOLD))
+      .attr("dominant-baseline", "central")
+      .text("Adequate (3)");
+    g.append("text")
+      .attr("class", "zone-label")
+      .attr("x", innerW + 8).attr("y", y(THRESHOLD) - 12)
+      .attr("dominant-baseline", "central")
+      .text("↑ Shortage");
+    g.append("text")
+      .attr("class", "zone-label")
+      .attr("x", innerW + 8).attr("y", y(THRESHOLD) + 14)
+      .attr("dominant-baseline", "central")
+      .text("↓ Surplus");
+
+    // Line generator
+    const line = d3.line()
+      .x(d => x(d.i))
+      .y(d => y(d.score))
+      .defined(d => d.score != null);
+
+    const indexByWeek = new Map(WEEKS.map((wk, i) => [wk.w, i]));
+
+    // Render each active region. Lines drawn back-to-front in a stable order
+    // so the legend's color order matches the chart.
+    const regionsToDraw = REGIONS
+      .filter(r => activeRegions.has(r))
+      .sort((a, b) => a.localeCompare(b));
+
+    const linesG = g.append("g").attr("class", "lines-layer");
+    const dotsG = g.append("g").attr("class", "dots-layer");
+
+    regionsToDraw.forEach(region => {
+      const pts = seriesFor(region).map(p => ({ ...p, i: indexByWeek.get(p.w) }));
+      if (!pts.length) return;
+      const s = styleFor(region);
+      linesG.append("path")
+        .attr("class", "series-line")
+        .attr("data-region", region)
+        .attr("stroke", s.color)
+        .attr("stroke-dasharray", s.dash || null)
+        .attr("d", line(pts));
+      // dots help when a region only has data for sparse weeks
+      dotsG.selectAll(`.series-dot[data-r="${region}"]`)
+        .data(pts).enter()
+        .append("circle")
+        .attr("class", "series-dot")
+        .attr("data-r", region)
+        .attr("data-region", region)
+        .attr("cx", d => x(d.i))
+        .attr("cy", d => y(d.score))
+        .attr("r", 2.5)
+        .attr("fill", s.color);
+    });
+
+    if (regionsToDraw.length === 0) {
+      g.append("text")
+        .attr("class", "axis-text")
+        .attr("x", innerW / 2).attr("y", innerH / 2)
+        .attr("text-anchor", "middle")
+        .attr("fill", "var(--ink-muted)")
+        .text("Select one or more regions above to see lines.");
       return;
     }
 
-    const gap = 6;
-    const usableH = H - marginT - marginB;
-    const rowH = (usableH - (rows.length - 1) * gap) / rows.length;
-    const barMaxW = W - marginL - marginR;
+    // Hover cursor + tooltip
+    const hoverLine = g.append("line")
+      .attr("class", "hover-line")
+      .attr("y1", 0).attr("y2", innerH);
+    const hoverDotsG = g.append("g").attr("class", "hover-dots");
 
-    rows.forEach((row, i) => {
-      const y = marginT + i * (rowH + gap);
-      const v = row.value;
-      const t = v == null ? 0 : Math.max(0, Math.min(1, (v - 1) / 4));
-      const w = v == null ? 0 : Math.max(barMaxW * t, 4);
+    const overlay = g.append("rect")
+      .attr("x", 0).attr("y", 0)
+      .attr("width", innerW).attr("height", innerH)
+      .attr("fill", "transparent")
+      .style("cursor", "crosshair");
 
-      svg.append("text")
-        .attr("class", "chart-row-label")
-        .attr("x", marginL - 10).attr("y", y + rowH / 2)
-        .attr("text-anchor", "end")
-        .attr("dominant-baseline", "central")
-        .text(row.region);
-
-      svg.append("rect")
-        .attr("class", "chart-bar")
-        .attr("x", marginL).attr("y", y)
-        .attr("width", w).attr("height", rowH)
-        .attr("rx", 4).attr("ry", 4)
-        .attr("fill", v == null ? "var(--no-data)" : heatColor(v));
-
-      svg.append("text")
-        .attr("class", "chart-row-value")
-        .attr("x", marginL + Math.max(w, 0) + 8).attr("y", y + rowH / 2)
-        .attr("dominant-baseline", "central")
-        .text(v == null ? "no data" : `${fmtScore(v)} · ${scoreLabel(v)}`);
+    overlay.on("pointerleave", () => {
+      hoverLine.classed("visible", false);
+      hoverDotsG.selectAll("*").remove();
+      tooltip.style.opacity = "0";
     });
+
+    overlay.on("pointermove", function(event) {
+      const [mx] = d3.pointer(event, this);
+      const iFloat = x.invert(mx);
+      const iSnap = Math.max(0, Math.min(WEEKS.length - 1, Math.round(iFloat)));
+      const wk = WEEKS[iSnap];
+
+      const snapX = x(iSnap);
+      hoverLine.attr("x1", snapX).attr("x2", snapX).classed("visible", true);
+
+      // Snapshot of every active region at this week.
+      const snapshot = [];
+      regionsToDraw.forEach(region => {
+        const cell = ((AVAILABILITY[currentCommodity] || {})[region] || {})[String(wk.w)];
+        if (cell) snapshot.push({ region, score: cell.score, n: cell.n, color: styleFor(region).color });
+      });
+      snapshot.sort((a, b) => b.score - a.score);
+
+      // Hover dots only on regions with data this week.
+      hoverDotsG.selectAll("*").remove();
+      snapshot.forEach(s => {
+        hoverDotsG.append("circle")
+          .attr("class", "hover-dot")
+          .attr("cx", snapX)
+          .attr("cy", y(s.score))
+          .attr("r", 4)
+          .attr("stroke", s.color);
+      });
+
+      // Tooltip
+      const rows = snapshot.length
+        ? snapshot.map(s =>
+            `<div class="tt-row">
+               <span class="tt-swatch" style="background:${s.color}"></span>
+               <span class="tt-region">${s.region}</span>
+               <span class="tt-score">${s.score.toFixed(2)}</span>
+               <span class="tt-label">${SCORE_LABELS[Math.max(1, Math.min(5, Math.round(s.score)))]}</span>
+             </div>`).join("")
+        : `<div class="tt-row"><span class="tt-region">No data</span></div>`;
+      tooltip.innerHTML = `<strong>Week of ${wk.label}</strong>${rows}`;
+
+      const areaRect = chartArea.getBoundingClientRect();
+      // place tooltip near pointer but flip to the left if it would overflow
+      const px = event.clientX - areaRect.left;
+      const py = event.clientY - areaRect.top;
+      const ttRect = tooltip.getBoundingClientRect();
+      const tw = ttRect.width || 220;
+      const th = ttRect.height || 80;
+      let left = px + 16;
+      let top = py - th / 2;
+      if (left + tw > areaRect.width - 8) left = px - tw - 16;
+      if (top < 8) top = 8;
+      if (top + th > areaRect.height - 8) top = areaRect.height - th - 8;
+      tooltip.style.left = left + "px";
+      tooltip.style.top = top + "px";
+      tooltip.style.opacity = "1";
+    });
+
+    applyHighlight();
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // LEGEND
-  // ═══════════════════════════════════════════════════════════════
-  function renderLegend(regionValues) {
-    const stops = ["--heat-0","--heat-1","--heat-2","--heat-3","--heat-4","--heat-5","--heat-6","--heat-7"];
-    document.getElementById("legendBar").innerHTML = stops
-      .map(s => `<div style="background:var(${s})"></div>`).join("");
-
-    // Tightest region = highest score among regions with data.
-    let top = { region: "—", v: null };
-    Object.entries(regionValues).forEach(([r, v]) => {
-      if (v == null) return;
-      if (top.v == null || v > top.v) top = { region: r, v };
-    });
-    const monthLabel = currentMonth === "all" ? "Q3" : currentMonth.toUpperCase();
-    const detail = top.v == null
-      ? "—"
-      : `${top.region} — ${fmtScore(top.v)} · ${scoreLabel(top.v)}`;
-    document.getElementById("legendCurrent").innerHTML =
-      `Tightest region · ${monthLabel}<strong>${detail}</strong>`;
-  }
-
-  function renderAll() {
-    document.getElementById("commodityName").textContent = currentCommodity;
-    const regionValues = {};
-    const regionCounts = {};
-    REGIONS.forEach(r => {
-      regionValues[r] = getRegionValue(r, currentCommodity, currentMonth);
-      regionCounts[r] = getRegionReportCount(r, currentCommodity, currentMonth);
-    });
-    renderMap();
-    renderChart(regionValues, regionCounts);
-    renderLegend(regionValues);
+  function applyHighlight() {
+    const svg = d3.select(svgEl);
+    if (!highlightRegion) {
+      svg.selectAll(".series-line").classed("dimmed", false).classed("highlight", false);
+      svg.selectAll(".series-dot").classed("dimmed", false);
+      return;
+    }
+    svg.selectAll(".series-line")
+      .classed("dimmed", function() { return this.getAttribute("data-region") !== highlightRegion; })
+      .classed("highlight", function() { return this.getAttribute("data-region") === highlightRegion; });
+    svg.selectAll(".series-dot")
+      .classed("dimmed", function() { return this.getAttribute("data-region") !== highlightRegion; });
   }
 
   // ═══════════════════════════════════════════════════════════════
   // INIT
   // ═══════════════════════════════════════════════════════════════
-  (async function init() {
+  (function init() {
     computeFeaturedCommodities();
     if (!COMMODITIES.includes(ALL_COMMODITIES_KEY)) {
       currentCommodity = COMMODITIES[0] || ALL_COMMODITIES_KEY;
     }
     renderCommodityPills();
-    bindMonthPills();
-    bindViewToggle();
-    try {
-      await loadTopology();
-      renderAll();
-    } catch (e) {
-      console.error("Failed to load US map:", e);
-      document.querySelector("#mapPane .map-container").innerHTML =
-        `<div style="padding:40px;text-align:center;color:#9a9a9a">
-          Could not load US map data from CDN. Check internet connection.
-        </div>`;
-    }
+    renderRegionPills();
+    renderChart();
   })();
 </script>
 </body>

@@ -1,10 +1,10 @@
-# Q3 Reefer Truck Availability Heat Map — USDA AMS
+# Q3 Reefer Truck Availability — USDA AMS
 
-Automated US heat map of Q3 (July–September) refrigerated truck **availability** by USDA shipping region. Availability is the weekly market rating AMS publishes on a 1–5 scale where 1 = Surplus (lots of trucks) and 5 = Shortage (capacity tight). Data is pulled live from the USDA AMS Refrigerated Truck Rates and Availability dataset (Socrata `acar-e3r8`) and publishes to GitHub Pages — drop the URL into your Q3 customer report as an iframe.
+Automated **line graph** of weekly refrigerated-truck availability across Q3 (Jul–Sep), by USDA shipping region. Availability is the AMS weekly market rating on a 1–5 scale (1 = Surplus, 5 = Shortage); the chart shows each region's 4-year-average trajectory through the quarter with a dashed reference line at **3 (Adequate)** so weeks above/below the threshold are easy to spot. Data is pulled live from the USDA AMS Refrigerated Truck Rates and Availability dataset (Socrata `acar-e3r8`) and publishes to GitHub Pages — drop the URL into your Q3 customer report as an iframe.
 
 **Live URL:** `https://<your-username>.github.io/usda-q3-truck-availability/`
 
-This is the companion report to the volumes heat map (`usda-q3-dashboard`). Volumes answer "where is the produce coming from"; availability answers "how hard is it to move it out of there."
+Companion to the volumes heat map (`usda-q3-dashboard`). Volumes answer "where is the produce coming from"; this answers "and how hard is it to move it out of there each week."
 
 ---
 
@@ -12,20 +12,22 @@ This is the companion report to the volumes heat map (`usda-q3-dashboard`). Volu
 
 1. **Push this repo to GitHub.**
 2. **Settings → Pages → Source: GitHub Actions.**
-3. *(Optional)* **Settings → Secrets → Actions → New repository secret** named `SOCRATA_APP_TOKEN` if you have one. Not required — the AMS dataset is public — but a token raises your rate limit. Free token: https://data.socrata.com/profile/app_tokens
+3. *(Optional)* **Settings → Secrets → Actions → New repository secret** named `SOCRATA_APP_TOKEN`. Not required — the AMS dataset is public — but a token raises your rate limit. Free token: https://data.socrata.com/profile/app_tokens
 4. **Actions → Build Q3 Availability Dashboard → Run workflow.**
 
-After ~90 seconds the heat map publishes at your Pages URL.
+After ~90 seconds the chart publishes at your Pages URL.
 
 ---
 
 ## What it does
 
 1. Pulls every Q3 (Jul/Aug/Sep) row from the **AMS Refrigerated Truck Rates and Availability** dataset for the last 4 complete calendar years.
-2. Aggregates the mean **availability score** by **commodity × USDA shipping region × Q3 month** (Arizona, California, Colorado, Florida, Great Lakes, Mid-Atlantic, New York, PNW, Southeast, Texas, plus Mexico-AZ / -CA / -NM / -TX crossings).
-3. Renders a **choropleth US map** (Census Bureau state boundaries via TopoJSON, Albers projection) with a cream → dark burnt-orange ramp — darker = tighter capacity.
-4. **Two filters:** commodity (top 30 by report-count + "All Commodities" rollup) and Q3 month (Full Q3 / Jul / Aug / Sep). Map recolors on each change.
-5. **Hover** any state for `{state} · {region} · {score} · {label} (n=reports)`. Hover Mexico boxes for cross-border availability.
+2. Aggregates the mean availability score by **commodity × USDA shipping region × ISO week**.
+3. Renders a multi-line chart — one line per region — with a dashed reference at **score = 3** dividing the surplus zone (below) from the shortage zone (above).
+4. **Filters:**
+   - **Commodity** — top 30 by report count plus an "All Commodities" rollup.
+   - **Regions** — multi-select chips, each color-matched to its line. Mexico crossings (dashed lines) start off; click to include. "All" / "None" buttons for fast toggling.
+5. **Hover** anywhere on the chart for a snapshot of every visible region's score that week, sorted high → low.
 
 ---
 
@@ -35,11 +37,11 @@ After ~90 seconds the heat map publishes at your Pages URL.
 |------:|:------|
 | 1 | Surplus |
 | 2 | Slight Surplus |
-| 3 | Adequate |
+| 3 | Adequate *(reference threshold)* |
 | 4 | Slight Shortage |
 | 5 | Shortage |
 
-The "Full Q3" rollup uses a report-count-weighted mean across Jul/Aug/Sep so a month with few observations doesn't drown out a month with many. The "All Commodities" rollup is the unweighted mean of every lane-week in that region/month — capacity tightness is a lane property, not a commodity one.
+The week-of-Q3 buckets use ISO week numbers; x-axis labels are anchored to the **Monday of each ISO week in the most-recent year** so the labels read like a single representative calendar (e.g., "Jul 7", "Jul 14") rather than smearing across the 4-year window.
 
 ---
 
@@ -47,10 +49,10 @@ The "Full Q3" rollup uses a report-count-weighted mean across Jul/Aug/Sep so a m
 
 ```
 .github/workflows/build.yml         Manual-trigger workflow → deploys to Pages
-scripts/fetch_availability.py       AMS Socrata API client; writes data/q3_availability.json
+scripts/fetch_availability.py       AMS Socrata client; writes data/q3_availability.json
 scripts/build_dashboard.py          Jinja2 render → docs/index.html
-templates/template.html.j2          Map + controls (D3 + TopoJSON)
-data/q3_availability.json           Latest cached fetch
+templates/template.html.j2          Line chart (D3) + chip controls
+data/q3_availability.json           Latest cached fetch (auto-committed by CI)
 docs/index.html                     Generated dashboard (published)
 requirements.txt                    requests + jinja2
 ```
@@ -70,9 +72,9 @@ python scripts/build_dashboard.py       # renders HTML
 
 ## Customization
 
-- **Change region → state mapping:** edit `STATE_TO_REGION` near the top of the `<script>` in `templates/template.html.j2`.
-- **Restyle:** all colors are CSS variables at the top of the template (`--heat-0` … `--heat-7`).
-- **Top-N commodities:** the script keeps the top 30 by report count; bump `TOP_N_COMMODITIES` in `fetch_availability.py` if you want more. (Past ~30 individual commodities have <5 reports/month per region and the means get noisy.)
+- **Region line colors:** edit the `REGION_STYLE` map at the top of the `<script>` in `templates/template.html.j2`.
+- **Threshold line:** change `const THRESHOLD = 3;` in the template.
+- **Top-N commodities:** the script keeps the top 30 by report count; bump `TOP_N_COMMODITIES` in `fetch_availability.py` if you want more.
 - **Different time window:** change `N_YEARS` or `Q3_MONTHS` in `fetch_availability.py`.
 
 ---
