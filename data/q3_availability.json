@@ -1,0 +1,546 @@
+{
+  "metadata": {
+    "source": "USDA AMS Specialty Crops Movement Reports (Socrata: agtransport.usda.gov/resource/acar-e3r8)",
+    "years": [
+      "2022",
+      "2023",
+      "2024",
+      "2025"
+    ],
+    "n_years_avg": 4,
+    "metric": "Refrigerated truck availability, Q3 (Jul-Sep) mean on 1-5 scale (1=Surplus, 5=Shortage)",
+    "scale": {
+      "1": "Surplus",
+      "2": "Slight Surplus",
+      "3": "Adequate",
+      "4": "Slight Shortage",
+      "5": "Shortage"
+    },
+    "fetched_at": "2026-05-20T17:59:52.496256"
+  },
+  "availability": {
+    "All Commodities": {
+      "California": {
+        "jul": 3.0,
+        "aug": 2.89,
+        "sep": 2.81,
+        "n_jul": 603,
+        "n_aug": 727,
+        "n_sep": 670
+      },
+      "Florida": {
+        "jul": 3.67,
+        "aug": null,
+        "sep": 3.0,
+        "n_jul": 67,
+        "n_aug": 0,
+        "n_sep": 5
+      },
+      "Great Lakes": {
+        "jul": 3.03,
+        "aug": 3.2,
+        "sep": 3.1,
+        "n_jul": 99,
+        "n_aug": 91,
+        "n_sep": 100
+      },
+      "PNW": {
+        "jul": 2.78,
+        "aug": 2.73,
+        "sep": 3.02,
+        "n_jul": 370,
+        "n_aug": 353,
+        "n_sep": 370
+      },
+      "Mexico-Arizona": {
+        "jul": 2.52,
+        "aug": 2.09,
+        "sep": 2.57,
+        "n_jul": 77,
+        "n_aug": 68,
+        "n_sep": 42
+      },
+      "Mexico-Texas": {
+        "jul": 1.09,
+        "aug": 1.0,
+        "sep": 1.01,
+        "n_jul": 139,
+        "n_aug": 151,
+        "n_sep": 139
+      },
+      "New York": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 78,
+        "n_aug": 66,
+        "n_sep": 76
+      },
+      "Southeast": {
+        "jul": 3.25,
+        "aug": 3.17,
+        "sep": 3.0,
+        "n_jul": 271,
+        "n_aug": 184,
+        "n_sep": 100
+      },
+      "Mid-Atlantic": {
+        "jul": 3.21,
+        "aug": 3.99,
+        "sep": 3.5,
+        "n_jul": 24,
+        "n_aug": 103,
+        "n_sep": 94
+      },
+      "Arizona": {
+        "jul": 3.0,
+        "aug": 2.68,
+        "sep": 2.44,
+        "n_jul": 53,
+        "n_aug": 57,
+        "n_sep": 48
+      }
+    },
+    "POTATOES": {
+      "Great Lakes": {
+        "jul": 3.0,
+        "aug": 2.91,
+        "sep": 3.0,
+        "n_jul": 75,
+        "n_aug": 69,
+        "n_sep": 74
+      },
+      "PNW": {
+        "jul": 2.67,
+        "aug": 2.69,
+        "sep": 3.16,
+        "n_jul": 178,
+        "n_aug": 131,
+        "n_sep": 103
+      },
+      "Florida": {
+        "jul": 3.0,
+        "aug": null,
+        "sep": null,
+        "n_jul": 20,
+        "n_aug": 0,
+        "n_sep": 0
+      }
+    },
+    "GRAPEFRUIT, LEMONS, ORANGES": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 126,
+        "n_aug": 125,
+        "n_sep": 124
+      }
+    },
+    "DRY ONIONS": {
+      "Southeast": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 158,
+        "n_aug": 125,
+        "n_sep": 72
+      },
+      "PNW": {
+        "jul": null,
+        "aug": null,
+        "sep": 3.0,
+        "n_jul": 0,
+        "n_aug": 0,
+        "n_sep": 18
+      }
+    },
+    "WATERMELONS": {
+      "Southeast": {
+        "jul": 3.07,
+        "aug": 2.83,
+        "sep": null,
+        "n_jul": 59,
+        "n_aug": 24,
+        "n_sep": 0
+      },
+      "Great Lakes": {
+        "jul": 4.0,
+        "aug": 3.75,
+        "sep": 3.5,
+        "n_jul": 1,
+        "n_aug": 8,
+        "n_sep": 14
+      },
+      "Mid-Atlantic": {
+        "jul": 3.21,
+        "aug": 3.75,
+        "sep": 3.51,
+        "n_jul": 24,
+        "n_aug": 83,
+        "n_sep": 93
+      },
+      "Florida": {
+        "jul": 3.17,
+        "aug": null,
+        "sep": null,
+        "n_jul": 6,
+        "n_aug": 0,
+        "n_sep": 0
+      }
+    },
+    "ASPARAGUS, BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, MANGOES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS": {
+      "Mexico-Texas": {
+        "jul": 1.0,
+        "aug": 1.0,
+        "sep": 1.0,
+        "n_jul": 71,
+        "n_aug": 113,
+        "n_sep": 97
+      }
+    },
+    "ARTICHOKES, BEETS, BRUSSELS SPROUTS, FRESH CUT CABBAGE, GREEN ONIONS, GREEN PEAS, RADISHES": {
+      "Arizona": {
+        "jul": 3.0,
+        "aug": 2.6,
+        "sep": 2.25,
+        "n_jul": 36,
+        "n_aug": 45,
+        "n_sep": 36
+      },
+      "California": {
+        "jul": 3.0,
+        "aug": 2.6,
+        "sep": 2.25,
+        "n_jul": 36,
+        "n_aug": 45,
+        "n_sep": 36
+      }
+    },
+    "APPLES": {
+      "New York": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 78,
+        "n_aug": 66,
+        "n_sep": 76
+      }
+    },
+    "CARROTS, GRAPES": {
+      "California": {
+        "jul": 3.0,
+        "aug": 2.85,
+        "sep": 2.76,
+        "n_jul": 46,
+        "n_aug": 65,
+        "n_sep": 62
+      }
+    },
+    "APPLES, BLUEBERRIES, CHERRIES, PEARS, RHUBARB": {
+      "PNW": {
+        "jul": 2.89,
+        "aug": 2.93,
+        "sep": 3.0,
+        "n_jul": 100,
+        "n_aug": 57,
+        "n_sep": 10
+      }
+    },
+    "DRY ONIONS, POTATOES": {
+      "PNW": {
+        "jul": 2.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 12,
+        "n_aug": 42,
+        "n_sep": 79
+      },
+      "Great Lakes": {
+        "jul": 2.0,
+        "aug": null,
+        "sep": 3.0,
+        "n_jul": 12,
+        "n_aug": 0,
+        "n_sep": 8
+      }
+    },
+    "GRAPES, NECTARINES, PEACHES, PLUMS": {
+      "California": {
+        "jul": null,
+        "aug": 2.92,
+        "sep": 2.81,
+        "n_jul": 0,
+        "n_aug": 74,
+        "n_sep": 62
+      }
+    },
+    "ANISE, ARTICHOKES, BEETS, BOK CHOY, BROCCOLI, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ESCAROLE, LEEKS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, GREEN PEAS, RADISHES, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 2.6,
+        "sep": 2.24,
+        "n_jul": 40,
+        "n_aug": 50,
+        "n_sep": 38
+      }
+    },
+    "ANISE, BOK CHOY, BROCCOLI, BRUSSELS SPROUTS, CABBAGE, CAULIFLOWER, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, LEEKS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, RADISHES, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 32,
+        "n_aug": 44,
+        "n_sep": 40
+      }
+    },
+    "ANISE, BOK CHOY, BROCCOLI, BRUSSELS SPROUTS, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, LEEKS, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, RADISHES, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 32,
+        "n_aug": 40,
+        "n_sep": 32
+      }
+    },
+    "ANISE, BEETS, BOK CHOY, BROCCOLI, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, GREEN PEAS, RADISHES, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 2.6,
+        "sep": 2.25,
+        "n_jul": 32,
+        "n_aug": 40,
+        "n_sep": 32
+      }
+    },
+    "BROCCOLI, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, KALE GREENS, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, MISCELLANEOUS ASIAN VEGETABLES, PARSLEY, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 40,
+        "n_aug": 32,
+        "n_sep": 32
+      }
+    },
+    "ASPARAGUS, BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS": {
+      "Mexico-Texas": {
+        "jul": 1.21,
+        "aug": 1.0,
+        "sep": 1.02,
+        "n_jul": 28,
+        "n_aug": 28,
+        "n_sep": 42
+      }
+    },
+    "MANGOES": {
+      "Mexico-Arizona": {
+        "jul": 2.77,
+        "aug": 1.68,
+        "sep": 2.65,
+        "n_jul": 13,
+        "n_aug": 47,
+        "n_sep": 34
+      }
+    },
+    "BROCCOLI, CABBAGE, CAULIFLOWER, ENDIVE, ESCAROLE, KALE GREENS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, GREEN ONIONS, PARSLEY, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 36,
+        "n_aug": 28,
+        "n_sep": 28
+      }
+    },
+    "SWEET POTATOES": {
+      "Southeast": {
+        "jul": 5.0,
+        "aug": 4.0,
+        "sep": 3.0,
+        "n_jul": 28,
+        "n_aug": 35,
+        "n_sep": 28
+      }
+    },
+    "CELERY, SWEET CORN, BELL PEPPERS": {
+      "Arizona": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 17,
+        "n_aug": 12,
+        "n_sep": 12
+      },
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 17,
+        "n_aug": 12,
+        "n_sep": 12
+      }
+    },
+    "ARTICHOKES, FRESH CUT CABBAGE, CELERY, CILANTRO, KALE GREENS, LEEKS, ROMAINE LETTUCE, PARSLEY, RADISHES": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 24,
+        "n_aug": 30,
+        "n_sep": 24
+      }
+    },
+    "ARTICHOKES, BRUSSELS SPROUTS, FRESH CUT CABBAGE, CELERY, CILANTRO, KALE GREENS, PARSLEY, RADISHES, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 2.6,
+        "sep": 2.25,
+        "n_jul": 24,
+        "n_aug": 30,
+        "n_sep": 24
+      }
+    },
+    "PEARS": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 9,
+        "n_aug": 31,
+        "n_sep": 32
+      }
+    },
+    "AVOCADOS, GRAPEFRUIT, LEMONS, ORANGES": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": null,
+        "n_jul": 32,
+        "n_aug": 32,
+        "n_sep": 0
+      }
+    },
+    "APPLES, BLUEBERRIES, CHERRIES, PEACHES, PEARS, PRUNES, RHUBARB": {
+      "PNW": {
+        "jul": null,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 0,
+        "n_aug": 30,
+        "n_sep": 30
+      }
+    },
+    "BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, MANGOES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS": {
+      "Mexico-Texas": {
+        "jul": 1.15,
+        "aug": 1.0,
+        "sep": null,
+        "n_jul": 40,
+        "n_aug": 10,
+        "n_sep": 0
+      }
+    },
+    "APPLES, APRICOTS, CHERRIES, PEARS": {
+      "PNW": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": null,
+        "n_jul": 40,
+        "n_aug": 10,
+        "n_sep": 0
+      }
+    },
+    "CANTALOUPES, WATERMELONS": {
+      "Great Lakes": {
+        "jul": 4.5,
+        "aug": 4.29,
+        "sep": 3.75,
+        "n_jul": 10,
+        "n_aug": 14,
+        "n_sep": 4
+      },
+      "Mid-Atlantic": {
+        "jul": null,
+        "aug": 5.0,
+        "sep": null,
+        "n_jul": 0,
+        "n_aug": 20,
+        "n_sep": 0
+      }
+    },
+    "ARTICHOKES, BRUSSELS SPROUTS, CABBAGE, CELERY, CILANTRO, KALE GREENS, PARSLEY, RADISHES, SPINACH": {
+      "California": {
+        "jul": 3.0,
+        "aug": 3.0,
+        "sep": 3.0,
+        "n_jul": 17,
+        "n_aug": 12,
+        "n_sep": 12
+      }
+    }
+  },
+  "commodities": [
+    "All Commodities",
+    "POTATOES",
+    "GRAPEFRUIT, LEMONS, ORANGES",
+    "DRY ONIONS",
+    "WATERMELONS",
+    "ASPARAGUS, BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, MANGOES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS",
+    "ARTICHOKES, BEETS, BRUSSELS SPROUTS, FRESH CUT CABBAGE, GREEN ONIONS, GREEN PEAS, RADISHES",
+    "APPLES",
+    "CARROTS, GRAPES",
+    "APPLES, BLUEBERRIES, CHERRIES, PEARS, RHUBARB",
+    "DRY ONIONS, POTATOES",
+    "GRAPES, NECTARINES, PEACHES, PLUMS",
+    "ANISE, ARTICHOKES, BEETS, BOK CHOY, BROCCOLI, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ESCAROLE, LEEKS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, GREEN PEAS, RADISHES, SPINACH",
+    "ANISE, BOK CHOY, BROCCOLI, BRUSSELS SPROUTS, CABBAGE, CAULIFLOWER, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, LEEKS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, RADISHES, SPINACH",
+    "ANISE, BOK CHOY, BROCCOLI, BRUSSELS SPROUTS, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, LEEKS, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, RADISHES, SPINACH",
+    "ANISE, BEETS, BOK CHOY, BROCCOLI, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, GREEN PEAS, RADISHES, SPINACH",
+    "BROCCOLI, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, KALE GREENS, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, MISCELLANEOUS ASIAN VEGETABLES, PARSLEY, SPINACH",
+    "ASPARAGUS, BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS",
+    "MANGOES",
+    "BROCCOLI, CABBAGE, CAULIFLOWER, ENDIVE, ESCAROLE, KALE GREENS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, GREEN ONIONS, PARSLEY, SPINACH",
+    "SWEET POTATOES",
+    "CELERY, SWEET CORN, BELL PEPPERS",
+    "ARTICHOKES, FRESH CUT CABBAGE, CELERY, CILANTRO, KALE GREENS, LEEKS, ROMAINE LETTUCE, PARSLEY, RADISHES",
+    "ARTICHOKES, BRUSSELS SPROUTS, FRESH CUT CABBAGE, CELERY, CILANTRO, KALE GREENS, PARSLEY, RADISHES, SPINACH",
+    "PEARS",
+    "AVOCADOS, GRAPEFRUIT, LEMONS, ORANGES",
+    "APPLES, BLUEBERRIES, CHERRIES, PEACHES, PEARS, PRUNES, RHUBARB",
+    "BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, MANGOES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS",
+    "APPLES, APRICOTS, CHERRIES, PEARS",
+    "CANTALOUPES, WATERMELONS",
+    "ARTICHOKES, BRUSSELS SPROUTS, CABBAGE, CELERY, CILANTRO, KALE GREENS, PARSLEY, RADISHES, SPINACH"
+  ],
+  "regions": [
+    "Arizona",
+    "California",
+    "Florida",
+    "Great Lakes",
+    "Mexico-Arizona",
+    "Mexico-Texas",
+    "Mid-Atlantic",
+    "New York",
+    "PNW",
+    "Southeast"
+  ],
+  "known_regions": [
+    "Arizona",
+    "California",
+    "Colorado",
+    "Florida",
+    "Great Lakes",
+    "Mexico-Arizona",
+    "Mexico-California",
+    "Mexico-New Mexico",
+    "Mexico-Texas",
+    "Mid-Atlantic",
+    "New York",
+    "PNW",
+    "Southeast",
+    "Texas"
+  ]
+}
