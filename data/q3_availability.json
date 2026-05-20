@@ -8,7 +8,7 @@
       "2025"
     ],
     "n_years_avg": 4,
-    "metric": "Refrigerated truck availability, Q3 (Jul-Sep) mean on 1-5 scale (1=Surplus, 5=Shortage)",
+    "metric": "Refrigerated truck availability, weekly mean across Q3 (1=Surplus, 5=Shortage)",
     "scale": {
       "1": "Surplus",
       "2": "Slight Surplus",
@@ -16,469 +16,2413 @@
       "4": "Slight Shortage",
       "5": "Shortage"
     },
-    "fetched_at": "2026-05-20T17:59:52.496256"
+    "fetched_at": "2026-05-20T18:09:39.460038"
   },
+  "weeks": [
+    {
+      "w": 27,
+      "label": "Jun 30",
+      "t": 1751241600000
+    },
+    {
+      "w": 28,
+      "label": "Jul 07",
+      "t": 1751846400000
+    },
+    {
+      "w": 29,
+      "label": "Jul 14",
+      "t": 1752451200000
+    },
+    {
+      "w": 30,
+      "label": "Jul 21",
+      "t": 1753056000000
+    },
+    {
+      "w": 31,
+      "label": "Jul 28",
+      "t": 1753660800000
+    },
+    {
+      "w": 32,
+      "label": "Aug 04",
+      "t": 1754265600000
+    },
+    {
+      "w": 33,
+      "label": "Aug 11",
+      "t": 1754870400000
+    },
+    {
+      "w": 34,
+      "label": "Aug 18",
+      "t": 1755475200000
+    },
+    {
+      "w": 35,
+      "label": "Aug 25",
+      "t": 1756080000000
+    },
+    {
+      "w": 36,
+      "label": "Sep 01",
+      "t": 1756684800000
+    },
+    {
+      "w": 37,
+      "label": "Sep 08",
+      "t": 1757289600000
+    },
+    {
+      "w": 38,
+      "label": "Sep 15",
+      "t": 1757894400000
+    },
+    {
+      "w": 39,
+      "label": "Sep 22",
+      "t": 1758499200000
+    },
+    {
+      "w": 40,
+      "label": "Sep 29",
+      "t": 1759104000000
+    }
+  ],
   "availability": {
     "All Commodities": {
       "California": {
-        "jul": 3.0,
-        "aug": 2.89,
-        "sep": 2.81,
-        "n_jul": 603,
-        "n_aug": 727,
-        "n_sep": 670
+        "27": {
+          "score": 3.0,
+          "n": 140
+        },
+        "28": {
+          "score": 3.0,
+          "n": 134
+        },
+        "29": {
+          "score": 3.0,
+          "n": 137
+        },
+        "30": {
+          "score": 3.0,
+          "n": 137
+        },
+        "31": {
+          "score": 3.0,
+          "n": 146
+        },
+        "32": {
+          "score": 3.0,
+          "n": 157
+        },
+        "33": {
+          "score": 2.76,
+          "n": 157
+        },
+        "34": {
+          "score": 2.76,
+          "n": 161
+        },
+        "35": {
+          "score": 2.96,
+          "n": 161
+        },
+        "36": {
+          "score": 2.73,
+          "n": 161
+        },
+        "37": {
+          "score": 2.73,
+          "n": 161
+        },
+        "38": {
+          "score": 2.77,
+          "n": 163
+        },
+        "39": {
+          "score": 3.0,
+          "n": 163
+        },
+        "40": {
+          "score": 3.0,
+          "n": 22
+        }
       },
       "Florida": {
-        "jul": 3.67,
-        "aug": null,
-        "sep": 3.0,
-        "n_jul": 67,
-        "n_aug": 0,
-        "n_sep": 5
+        "27": {
+          "score": 4.0,
+          "n": 26
+        },
+        "28": {
+          "score": 3.82,
+          "n": 22
+        },
+        "29": {
+          "score": 3.09,
+          "n": 11
+        },
+        "30": {
+          "score": 3.0,
+          "n": 4
+        },
+        "31": {
+          "score": 3.0,
+          "n": 4
+        },
+        "39": {
+          "score": 3.0,
+          "n": 5
+        }
       },
       "Great Lakes": {
-        "jul": 3.03,
-        "aug": 3.2,
-        "sep": 3.1,
-        "n_jul": 99,
-        "n_aug": 91,
-        "n_sep": 100
+        "27": {
+          "score": 2.76,
+          "n": 25
+        },
+        "28": {
+          "score": 2.73,
+          "n": 26
+        },
+        "29": {
+          "score": 3.27,
+          "n": 22
+        },
+        "34": {
+          "score": 3.1,
+          "n": 21
+        },
+        "35": {
+          "score": 3.08,
+          "n": 25
+        },
+        "36": {
+          "score": 3.24,
+          "n": 21
+        },
+        "37": {
+          "score": 3.16,
+          "n": 25
+        },
+        "38": {
+          "score": 3.03,
+          "n": 29
+        },
+        "30": {
+          "score": 3.35,
+          "n": 17
+        },
+        "31": {
+          "score": 3.33,
+          "n": 18
+        },
+        "32": {
+          "score": 3.39,
+          "n": 18
+        },
+        "33": {
+          "score": 3.28,
+          "n": 18
+        },
+        "39": {
+          "score": 3.0,
+          "n": 25
+        }
       },
       "PNW": {
-        "jul": 2.78,
-        "aug": 2.73,
-        "sep": 3.02,
-        "n_jul": 370,
-        "n_aug": 353,
-        "n_sep": 370
+        "27": {
+          "score": 2.71,
+          "n": 94
+        },
+        "28": {
+          "score": 2.71,
+          "n": 94
+        },
+        "29": {
+          "score": 2.89,
+          "n": 75
+        },
+        "30": {
+          "score": 2.76,
+          "n": 75
+        },
+        "31": {
+          "score": 2.88,
+          "n": 75
+        },
+        "32": {
+          "score": 2.88,
+          "n": 74
+        },
+        "33": {
+          "score": 2.61,
+          "n": 74
+        },
+        "34": {
+          "score": 2.65,
+          "n": 82
+        },
+        "35": {
+          "score": 2.76,
+          "n": 80
+        },
+        "36": {
+          "score": 2.9,
+          "n": 80
+        },
+        "37": {
+          "score": 3.1,
+          "n": 84
+        },
+        "38": {
+          "score": 3.08,
+          "n": 98
+        },
+        "39": {
+          "score": 2.98,
+          "n": 98
+        },
+        "40": {
+          "score": 3.0,
+          "n": 10
+        }
       },
       "Mexico-Arizona": {
-        "jul": 2.52,
-        "aug": 2.09,
-        "sep": 2.57,
-        "n_jul": 77,
-        "n_aug": 68,
-        "n_sep": 42
+        "27": {
+          "score": 2.29,
+          "n": 24
+        },
+        "28": {
+          "score": 2.26,
+          "n": 23
+        },
+        "29": {
+          "score": 3.0,
+          "n": 20
+        },
+        "31": {
+          "score": 1.82,
+          "n": 17
+        },
+        "32": {
+          "score": 1.94,
+          "n": 17
+        },
+        "33": {
+          "score": 1.94,
+          "n": 17
+        },
+        "34": {
+          "score": 2.56,
+          "n": 9
+        },
+        "35": {
+          "score": 2.56,
+          "n": 9
+        },
+        "36": {
+          "score": 2.56,
+          "n": 9
+        },
+        "37": {
+          "score": 2.56,
+          "n": 9
+        },
+        "38": {
+          "score": 2.56,
+          "n": 9
+        },
+        "39": {
+          "score": 2.6,
+          "n": 15
+        },
+        "30": {
+          "score": 2.89,
+          "n": 9
+        }
       },
       "Mexico-Texas": {
-        "jul": 1.09,
-        "aug": 1.0,
-        "sep": 1.01,
-        "n_jul": 139,
-        "n_aug": 151,
-        "n_sep": 139
+        "27": {
+          "score": 1.04,
+          "n": 26
+        },
+        "28": {
+          "score": 1.03,
+          "n": 33
+        },
+        "29": {
+          "score": 1.12,
+          "n": 33
+        },
+        "30": {
+          "score": 1.09,
+          "n": 33
+        },
+        "31": {
+          "score": 1.09,
+          "n": 33
+        },
+        "32": {
+          "score": 1.0,
+          "n": 33
+        },
+        "33": {
+          "score": 1.0,
+          "n": 33
+        },
+        "34": {
+          "score": 1.0,
+          "n": 33
+        },
+        "35": {
+          "score": 1.0,
+          "n": 33
+        },
+        "36": {
+          "score": 1.0,
+          "n": 33
+        },
+        "37": {
+          "score": 1.0,
+          "n": 33
+        },
+        "38": {
+          "score": 1.0,
+          "n": 33
+        },
+        "39": {
+          "score": 1.0,
+          "n": 33
+        },
+        "40": {
+          "score": 1.14,
+          "n": 7
+        }
       },
       "New York": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 78,
-        "n_aug": 66,
-        "n_sep": 76
+        "27": {
+          "score": 3.0,
+          "n": 20
+        },
+        "38": {
+          "score": 3.0,
+          "n": 21
+        },
+        "39": {
+          "score": 3.0,
+          "n": 22
+        },
+        "28": {
+          "score": 3.0,
+          "n": 16
+        },
+        "29": {
+          "score": 3.0,
+          "n": 16
+        },
+        "30": {
+          "score": 3.0,
+          "n": 16
+        },
+        "31": {
+          "score": 3.0,
+          "n": 16
+        },
+        "32": {
+          "score": 3.0,
+          "n": 16
+        },
+        "33": {
+          "score": 3.0,
+          "n": 16
+        },
+        "34": {
+          "score": 3.0,
+          "n": 14
+        },
+        "35": {
+          "score": 3.0,
+          "n": 14
+        },
+        "36": {
+          "score": 3.0,
+          "n": 14
+        },
+        "37": {
+          "score": 3.0,
+          "n": 14
+        },
+        "40": {
+          "score": 3.0,
+          "n": 5
+        }
       },
       "Southeast": {
-        "jul": 3.25,
-        "aug": 3.17,
-        "sep": 3.0,
-        "n_jul": 271,
-        "n_aug": 184,
-        "n_sep": 100
+        "27": {
+          "score": 3.33,
+          "n": 55
+        },
+        "28": {
+          "score": 3.3,
+          "n": 61
+        },
+        "29": {
+          "score": 3.32,
+          "n": 65
+        },
+        "30": {
+          "score": 3.22,
+          "n": 60
+        },
+        "31": {
+          "score": 3.22,
+          "n": 54
+        },
+        "32": {
+          "score": 3.11,
+          "n": 46
+        },
+        "33": {
+          "score": 3.15,
+          "n": 40
+        },
+        "34": {
+          "score": 3.15,
+          "n": 40
+        },
+        "35": {
+          "score": 3.0,
+          "n": 34
+        },
+        "36": {
+          "score": 3.0,
+          "n": 25
+        },
+        "37": {
+          "score": 3.0,
+          "n": 25
+        },
+        "38": {
+          "score": 3.0,
+          "n": 25
+        },
+        "39": {
+          "score": 3.0,
+          "n": 25
+        }
       },
       "Mid-Atlantic": {
-        "jul": 3.21,
-        "aug": 3.99,
-        "sep": 3.5,
-        "n_jul": 24,
-        "n_aug": 103,
-        "n_sep": 94
+        "31": {
+          "score": 3.65,
+          "n": 23
+        },
+        "32": {
+          "score": 3.74,
+          "n": 23
+        },
+        "33": {
+          "score": 4.26,
+          "n": 23
+        },
+        "34": {
+          "score": 4.17,
+          "n": 23
+        },
+        "35": {
+          "score": 3.83,
+          "n": 23
+        },
+        "36": {
+          "score": 3.83,
+          "n": 23
+        },
+        "37": {
+          "score": 3.78,
+          "n": 23
+        },
+        "38": {
+          "score": 3.26,
+          "n": 23
+        },
+        "39": {
+          "score": 3.21,
+          "n": 19
+        },
+        "29": {
+          "score": 3.0,
+          "n": 6
+        },
+        "30": {
+          "score": 3.0,
+          "n": 6
+        },
+        "40": {
+          "score": 3.0,
+          "n": 6
+        }
       },
       "Arizona": {
-        "jul": 3.0,
-        "aug": 2.68,
-        "sep": 2.44,
-        "n_jul": 53,
-        "n_aug": 57,
-        "n_sep": 48
+        "27": {
+          "score": 3.0,
+          "n": 14
+        },
+        "28": {
+          "score": 3.0,
+          "n": 12
+        },
+        "29": {
+          "score": 3.0,
+          "n": 12
+        },
+        "30": {
+          "score": 3.0,
+          "n": 12
+        },
+        "31": {
+          "score": 3.0,
+          "n": 12
+        },
+        "32": {
+          "score": 3.0,
+          "n": 12
+        },
+        "33": {
+          "score": 2.25,
+          "n": 12
+        },
+        "34": {
+          "score": 2.25,
+          "n": 12
+        },
+        "35": {
+          "score": 3.0,
+          "n": 12
+        },
+        "36": {
+          "score": 2.25,
+          "n": 12
+        },
+        "37": {
+          "score": 2.25,
+          "n": 12
+        },
+        "38": {
+          "score": 2.25,
+          "n": 12
+        },
+        "39": {
+          "score": 3.0,
+          "n": 12
+        }
       }
     },
     "POTATOES": {
       "Great Lakes": {
-        "jul": 3.0,
-        "aug": 2.91,
-        "sep": 3.0,
-        "n_jul": 75,
-        "n_aug": 69,
-        "n_sep": 74
+        "27": {
+          "score": 3.0,
+          "n": 19
+        },
+        "28": {
+          "score": 3.0,
+          "n": 19
+        },
+        "29": {
+          "score": 3.0,
+          "n": 18
+        },
+        "34": {
+          "score": 2.81,
+          "n": 16
+        },
+        "35": {
+          "score": 2.85,
+          "n": 20
+        },
+        "36": {
+          "score": 3.0,
+          "n": 16
+        },
+        "37": {
+          "score": 3.0,
+          "n": 20
+        },
+        "38": {
+          "score": 3.0,
+          "n": 24
+        },
+        "30": {
+          "score": 3.0,
+          "n": 13
+        },
+        "31": {
+          "score": 3.0,
+          "n": 13
+        },
+        "32": {
+          "score": 3.0,
+          "n": 13
+        },
+        "33": {
+          "score": 3.0,
+          "n": 13
+        },
+        "39": {
+          "score": 3.0,
+          "n": 14
+        }
       },
       "PNW": {
-        "jul": 2.67,
-        "aug": 2.69,
-        "sep": 3.16,
-        "n_jul": 178,
-        "n_aug": 131,
-        "n_sep": 103
+        "27": {
+          "score": 2.56,
+          "n": 48
+        },
+        "28": {
+          "score": 2.56,
+          "n": 48
+        },
+        "29": {
+          "score": 2.77,
+          "n": 35
+        },
+        "30": {
+          "score": 2.77,
+          "n": 35
+        },
+        "31": {
+          "score": 2.72,
+          "n": 29
+        },
+        "32": {
+          "score": 2.72,
+          "n": 29
+        },
+        "33": {
+          "score": 2.72,
+          "n": 29
+        },
+        "34": {
+          "score": 2.72,
+          "n": 29
+        },
+        "35": {
+          "score": 2.7,
+          "n": 27
+        },
+        "36": {
+          "score": 2.7,
+          "n": 27
+        },
+        "37": {
+          "score": 3.33,
+          "n": 24
+        },
+        "38": {
+          "score": 3.31,
+          "n": 26
+        },
+        "39": {
+          "score": 3.31,
+          "n": 26
+        }
       },
       "Florida": {
-        "jul": 3.0,
-        "aug": null,
-        "sep": null,
-        "n_jul": 20,
-        "n_aug": 0,
-        "n_sep": 0
+        "27": {
+          "score": 3.0,
+          "n": 4
+        },
+        "28": {
+          "score": 3.0,
+          "n": 4
+        },
+        "29": {
+          "score": 3.0,
+          "n": 4
+        },
+        "30": {
+          "score": 3.0,
+          "n": 4
+        },
+        "31": {
+          "score": 3.0,
+          "n": 4
+        }
       }
     },
     "GRAPEFRUIT, LEMONS, ORANGES": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 126,
-        "n_aug": 125,
-        "n_sep": 124
+        "35": {
+          "score": 3.0,
+          "n": 35
+        },
+        "36": {
+          "score": 3.0,
+          "n": 35
+        },
+        "37": {
+          "score": 3.0,
+          "n": 35
+        },
+        "27": {
+          "score": 3.0,
+          "n": 27
+        },
+        "28": {
+          "score": 3.0,
+          "n": 27
+        },
+        "29": {
+          "score": 3.0,
+          "n": 27
+        },
+        "30": {
+          "score": 3.0,
+          "n": 27
+        },
+        "31": {
+          "score": 3.0,
+          "n": 27
+        },
+        "32": {
+          "score": 3.0,
+          "n": 27
+        },
+        "33": {
+          "score": 3.0,
+          "n": 27
+        },
+        "34": {
+          "score": 3.0,
+          "n": 27
+        },
+        "38": {
+          "score": 3.0,
+          "n": 27
+        },
+        "39": {
+          "score": 3.0,
+          "n": 18
+        },
+        "40": {
+          "score": 3.0,
+          "n": 9
+        }
       }
     },
     "DRY ONIONS": {
       "Southeast": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 158,
-        "n_aug": 125,
-        "n_sep": 72
+        "27": {
+          "score": 3.0,
+          "n": 35
+        },
+        "28": {
+          "score": 3.0,
+          "n": 35
+        },
+        "29": {
+          "score": 3.0,
+          "n": 35
+        },
+        "30": {
+          "score": 3.0,
+          "n": 35
+        },
+        "31": {
+          "score": 3.0,
+          "n": 35
+        },
+        "32": {
+          "score": 3.0,
+          "n": 27
+        },
+        "33": {
+          "score": 3.0,
+          "n": 27
+        },
+        "34": {
+          "score": 3.0,
+          "n": 27
+        },
+        "35": {
+          "score": 3.0,
+          "n": 27
+        },
+        "36": {
+          "score": 3.0,
+          "n": 18
+        },
+        "37": {
+          "score": 3.0,
+          "n": 18
+        },
+        "38": {
+          "score": 3.0,
+          "n": 18
+        },
+        "39": {
+          "score": 3.0,
+          "n": 18
+        }
       },
       "PNW": {
-        "jul": null,
-        "aug": null,
-        "sep": 3.0,
-        "n_jul": 0,
-        "n_aug": 0,
-        "n_sep": 18
+        "38": {
+          "score": 3.0,
+          "n": 9
+        },
+        "39": {
+          "score": 3.0,
+          "n": 9
+        }
       }
     },
     "WATERMELONS": {
       "Southeast": {
-        "jul": 3.07,
-        "aug": 2.83,
-        "sep": null,
-        "n_jul": 59,
-        "n_aug": 24,
-        "n_sep": 0
+        "29": {
+          "score": 3.3,
+          "n": 23
+        },
+        "28": {
+          "score": 3.0,
+          "n": 6
+        },
+        "30": {
+          "score": 2.94,
+          "n": 18
+        },
+        "31": {
+          "score": 2.83,
+          "n": 12
+        },
+        "32": {
+          "score": 2.83,
+          "n": 12
+        },
+        "33": {
+          "score": 2.83,
+          "n": 6
+        },
+        "34": {
+          "score": 2.83,
+          "n": 6
+        }
       },
       "Great Lakes": {
-        "jul": 4.0,
-        "aug": 3.75,
-        "sep": 3.5,
-        "n_jul": 1,
-        "n_aug": 8,
-        "n_sep": 14
+        "35": {
+          "score": 4.0,
+          "n": 3
+        },
+        "36": {
+          "score": 4.0,
+          "n": 3
+        },
+        "37": {
+          "score": 4.0,
+          "n": 3
+        },
+        "38": {
+          "score": 3.2,
+          "n": 5
+        },
+        "33": {
+          "score": 3.5,
+          "n": 2
+        },
+        "34": {
+          "score": 3.5,
+          "n": 2
+        },
+        "39": {
+          "score": 3.0,
+          "n": 3
+        },
+        "31": {
+          "score": 4.0,
+          "n": 1
+        },
+        "32": {
+          "score": 4.0,
+          "n": 1
+        }
       },
       "Mid-Atlantic": {
-        "jul": 3.21,
-        "aug": 3.75,
-        "sep": 3.51,
-        "n_jul": 24,
-        "n_aug": 83,
-        "n_sep": 93
+        "35": {
+          "score": 3.83,
+          "n": 23
+        },
+        "36": {
+          "score": 3.83,
+          "n": 23
+        },
+        "37": {
+          "score": 3.78,
+          "n": 23
+        },
+        "38": {
+          "score": 3.26,
+          "n": 23
+        },
+        "31": {
+          "score": 3.28,
+          "n": 18
+        },
+        "32": {
+          "score": 3.39,
+          "n": 18
+        },
+        "33": {
+          "score": 4.06,
+          "n": 18
+        },
+        "34": {
+          "score": 3.94,
+          "n": 18
+        },
+        "39": {
+          "score": 3.22,
+          "n": 18
+        },
+        "29": {
+          "score": 3.0,
+          "n": 6
+        },
+        "30": {
+          "score": 3.0,
+          "n": 6
+        },
+        "40": {
+          "score": 3.0,
+          "n": 6
+        }
       },
       "Florida": {
-        "jul": 3.17,
-        "aug": null,
-        "sep": null,
-        "n_jul": 6,
-        "n_aug": 0,
-        "n_sep": 0
+        "29": {
+          "score": 3.17,
+          "n": 6
+        }
       }
     },
     "ASPARAGUS, BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, MANGOES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS": {
       "Mexico-Texas": {
-        "jul": 1.0,
-        "aug": 1.0,
-        "sep": 1.0,
-        "n_jul": 71,
-        "n_aug": 113,
-        "n_sep": 97
+        "32": {
+          "score": 1.0,
+          "n": 26
+        },
+        "33": {
+          "score": 1.0,
+          "n": 26
+        },
+        "34": {
+          "score": 1.0,
+          "n": 26
+        },
+        "35": {
+          "score": 1.0,
+          "n": 26
+        },
+        "36": {
+          "score": 1.0,
+          "n": 26
+        },
+        "37": {
+          "score": 1.0,
+          "n": 26
+        },
+        "38": {
+          "score": 1.0,
+          "n": 26
+        },
+        "39": {
+          "score": 1.0,
+          "n": 19
+        },
+        "27": {
+          "score": 1.0,
+          "n": 16
+        },
+        "28": {
+          "score": 1.0,
+          "n": 16
+        },
+        "29": {
+          "score": 1.0,
+          "n": 16
+        },
+        "30": {
+          "score": 1.0,
+          "n": 16
+        },
+        "31": {
+          "score": 1.0,
+          "n": 16
+        }
       }
     },
     "ARTICHOKES, BEETS, BRUSSELS SPROUTS, FRESH CUT CABBAGE, GREEN ONIONS, GREEN PEAS, RADISHES": {
       "Arizona": {
-        "jul": 3.0,
-        "aug": 2.6,
-        "sep": 2.25,
-        "n_jul": 36,
-        "n_aug": 45,
-        "n_sep": 36
+        "27": {
+          "score": 3.0,
+          "n": 9
+        },
+        "28": {
+          "score": 3.0,
+          "n": 9
+        },
+        "29": {
+          "score": 3.0,
+          "n": 9
+        },
+        "30": {
+          "score": 3.0,
+          "n": 9
+        },
+        "31": {
+          "score": 3.0,
+          "n": 9
+        },
+        "32": {
+          "score": 3.0,
+          "n": 9
+        },
+        "33": {
+          "score": 2.0,
+          "n": 9
+        },
+        "34": {
+          "score": 2.0,
+          "n": 9
+        },
+        "35": {
+          "score": 3.0,
+          "n": 9
+        },
+        "36": {
+          "score": 2.0,
+          "n": 9
+        },
+        "37": {
+          "score": 2.0,
+          "n": 9
+        },
+        "38": {
+          "score": 2.0,
+          "n": 9
+        },
+        "39": {
+          "score": 3.0,
+          "n": 9
+        }
       },
       "California": {
-        "jul": 3.0,
-        "aug": 2.6,
-        "sep": 2.25,
-        "n_jul": 36,
-        "n_aug": 45,
-        "n_sep": 36
+        "27": {
+          "score": 3.0,
+          "n": 9
+        },
+        "28": {
+          "score": 3.0,
+          "n": 9
+        },
+        "29": {
+          "score": 3.0,
+          "n": 9
+        },
+        "30": {
+          "score": 3.0,
+          "n": 9
+        },
+        "31": {
+          "score": 3.0,
+          "n": 9
+        },
+        "32": {
+          "score": 3.0,
+          "n": 9
+        },
+        "33": {
+          "score": 2.0,
+          "n": 9
+        },
+        "34": {
+          "score": 2.0,
+          "n": 9
+        },
+        "35": {
+          "score": 3.0,
+          "n": 9
+        },
+        "36": {
+          "score": 2.0,
+          "n": 9
+        },
+        "37": {
+          "score": 2.0,
+          "n": 9
+        },
+        "38": {
+          "score": 2.0,
+          "n": 9
+        },
+        "39": {
+          "score": 3.0,
+          "n": 9
+        }
       }
     },
     "APPLES": {
       "New York": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 78,
-        "n_aug": 66,
-        "n_sep": 76
+        "27": {
+          "score": 3.0,
+          "n": 20
+        },
+        "38": {
+          "score": 3.0,
+          "n": 21
+        },
+        "39": {
+          "score": 3.0,
+          "n": 22
+        },
+        "28": {
+          "score": 3.0,
+          "n": 16
+        },
+        "29": {
+          "score": 3.0,
+          "n": 16
+        },
+        "30": {
+          "score": 3.0,
+          "n": 16
+        },
+        "31": {
+          "score": 3.0,
+          "n": 16
+        },
+        "32": {
+          "score": 3.0,
+          "n": 16
+        },
+        "33": {
+          "score": 3.0,
+          "n": 16
+        },
+        "34": {
+          "score": 3.0,
+          "n": 14
+        },
+        "35": {
+          "score": 3.0,
+          "n": 14
+        },
+        "36": {
+          "score": 3.0,
+          "n": 14
+        },
+        "37": {
+          "score": 3.0,
+          "n": 14
+        },
+        "40": {
+          "score": 3.0,
+          "n": 5
+        }
       }
     },
     "CARROTS, GRAPES": {
       "California": {
-        "jul": 3.0,
-        "aug": 2.85,
-        "sep": 2.76,
-        "n_jul": 46,
-        "n_aug": 65,
-        "n_sep": 62
+        "32": {
+          "score": 3.0,
+          "n": 15
+        },
+        "33": {
+          "score": 2.67,
+          "n": 15
+        },
+        "34": {
+          "score": 2.67,
+          "n": 15
+        },
+        "35": {
+          "score": 3.0,
+          "n": 15
+        },
+        "36": {
+          "score": 2.67,
+          "n": 15
+        },
+        "37": {
+          "score": 2.67,
+          "n": 15
+        },
+        "38": {
+          "score": 2.67,
+          "n": 15
+        },
+        "39": {
+          "score": 3.0,
+          "n": 15
+        },
+        "27": {
+          "score": 3.0,
+          "n": 11
+        },
+        "28": {
+          "score": 3.0,
+          "n": 10
+        },
+        "29": {
+          "score": 3.0,
+          "n": 10
+        },
+        "30": {
+          "score": 3.0,
+          "n": 10
+        },
+        "31": {
+          "score": 3.0,
+          "n": 10
+        },
+        "40": {
+          "score": 3.0,
+          "n": 2
+        }
       }
     },
     "APPLES, BLUEBERRIES, CHERRIES, PEARS, RHUBARB": {
       "PNW": {
-        "jul": 2.89,
-        "aug": 2.93,
-        "sep": 3.0,
-        "n_jul": 100,
-        "n_aug": 57,
-        "n_sep": 10
+        "31": {
+          "score": 2.96,
+          "n": 27
+        },
+        "27": {
+          "score": 3.0,
+          "n": 20
+        },
+        "28": {
+          "score": 3.0,
+          "n": 20
+        },
+        "29": {
+          "score": 3.0,
+          "n": 20
+        },
+        "30": {
+          "score": 2.5,
+          "n": 20
+        },
+        "32": {
+          "score": 2.95,
+          "n": 20
+        },
+        "33": {
+          "score": 2.9,
+          "n": 10
+        },
+        "34": {
+          "score": 2.9,
+          "n": 10
+        },
+        "35": {
+          "score": 2.9,
+          "n": 10
+        },
+        "36": {
+          "score": 3.0,
+          "n": 10
+        }
       }
     },
     "DRY ONIONS, POTATOES": {
       "PNW": {
-        "jul": 2.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 12,
-        "n_aug": 42,
-        "n_sep": 79
+        "34": {
+          "score": 3.0,
+          "n": 13
+        },
+        "35": {
+          "score": 3.0,
+          "n": 13
+        },
+        "36": {
+          "score": 3.0,
+          "n": 13
+        },
+        "37": {
+          "score": 3.0,
+          "n": 20
+        },
+        "38": {
+          "score": 3.0,
+          "n": 23
+        },
+        "39": {
+          "score": 3.0,
+          "n": 23
+        },
+        "31": {
+          "score": 3.0,
+          "n": 6
+        },
+        "32": {
+          "score": 3.0,
+          "n": 5
+        },
+        "33": {
+          "score": 3.0,
+          "n": 5
+        },
+        "27": {
+          "score": 2.0,
+          "n": 6
+        },
+        "28": {
+          "score": 2.0,
+          "n": 6
+        }
       },
       "Great Lakes": {
-        "jul": 2.0,
-        "aug": null,
-        "sep": 3.0,
-        "n_jul": 12,
-        "n_aug": 0,
-        "n_sep": 8
+        "39": {
+          "score": 3.0,
+          "n": 8
+        },
+        "27": {
+          "score": 2.0,
+          "n": 6
+        },
+        "28": {
+          "score": 2.0,
+          "n": 6
+        }
       }
     },
     "GRAPES, NECTARINES, PEACHES, PLUMS": {
       "California": {
-        "jul": null,
-        "aug": 2.92,
-        "sep": 2.81,
-        "n_jul": 0,
-        "n_aug": 74,
-        "n_sep": 62
+        "32": {
+          "score": 3.0,
+          "n": 17
+        },
+        "33": {
+          "score": 3.0,
+          "n": 17
+        },
+        "34": {
+          "score": 3.0,
+          "n": 17
+        },
+        "35": {
+          "score": 2.65,
+          "n": 17
+        },
+        "36": {
+          "score": 2.65,
+          "n": 17
+        },
+        "37": {
+          "score": 2.65,
+          "n": 17
+        },
+        "38": {
+          "score": 3.0,
+          "n": 17
+        },
+        "31": {
+          "score": 3.0,
+          "n": 6
+        },
+        "39": {
+          "score": 3.0,
+          "n": 11
+        }
       }
     },
     "ANISE, ARTICHOKES, BEETS, BOK CHOY, BROCCOLI, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ESCAROLE, LEEKS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, GREEN PEAS, RADISHES, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 2.6,
-        "sep": 2.24,
-        "n_jul": 40,
-        "n_aug": 50,
-        "n_sep": 38
+        "27": {
+          "score": 3.0,
+          "n": 10
+        },
+        "28": {
+          "score": 3.0,
+          "n": 10
+        },
+        "29": {
+          "score": 3.0,
+          "n": 10
+        },
+        "30": {
+          "score": 3.0,
+          "n": 10
+        },
+        "31": {
+          "score": 3.0,
+          "n": 10
+        },
+        "32": {
+          "score": 3.0,
+          "n": 10
+        },
+        "33": {
+          "score": 2.0,
+          "n": 10
+        },
+        "34": {
+          "score": 2.0,
+          "n": 10
+        },
+        "35": {
+          "score": 3.0,
+          "n": 10
+        },
+        "36": {
+          "score": 2.0,
+          "n": 10
+        },
+        "37": {
+          "score": 2.0,
+          "n": 10
+        },
+        "38": {
+          "score": 2.0,
+          "n": 9
+        },
+        "39": {
+          "score": 3.0,
+          "n": 9
+        }
       }
     },
     "ANISE, BOK CHOY, BROCCOLI, BRUSSELS SPROUTS, CABBAGE, CAULIFLOWER, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, LEEKS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, RADISHES, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 32,
-        "n_aug": 44,
-        "n_sep": 40
+        "27": {
+          "score": 3.0,
+          "n": 8
+        },
+        "28": {
+          "score": 3.0,
+          "n": 8
+        },
+        "29": {
+          "score": 3.0,
+          "n": 8
+        },
+        "30": {
+          "score": 3.0,
+          "n": 8
+        },
+        "31": {
+          "score": 3.0,
+          "n": 8
+        },
+        "32": {
+          "score": 3.0,
+          "n": 8
+        },
+        "33": {
+          "score": 3.0,
+          "n": 8
+        },
+        "34": {
+          "score": 3.0,
+          "n": 10
+        },
+        "35": {
+          "score": 3.0,
+          "n": 10
+        },
+        "36": {
+          "score": 3.0,
+          "n": 10
+        },
+        "37": {
+          "score": 3.0,
+          "n": 10
+        },
+        "38": {
+          "score": 3.0,
+          "n": 10
+        },
+        "39": {
+          "score": 3.0,
+          "n": 10
+        }
       }
     },
     "ANISE, BOK CHOY, BROCCOLI, BRUSSELS SPROUTS, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, LEEKS, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, RADISHES, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 32,
-        "n_aug": 40,
-        "n_sep": 32
+        "27": {
+          "score": 3.0,
+          "n": 8
+        },
+        "28": {
+          "score": 3.0,
+          "n": 8
+        },
+        "29": {
+          "score": 3.0,
+          "n": 8
+        },
+        "30": {
+          "score": 3.0,
+          "n": 8
+        },
+        "31": {
+          "score": 3.0,
+          "n": 8
+        },
+        "32": {
+          "score": 3.0,
+          "n": 8
+        },
+        "33": {
+          "score": 3.0,
+          "n": 8
+        },
+        "34": {
+          "score": 3.0,
+          "n": 8
+        },
+        "35": {
+          "score": 3.0,
+          "n": 8
+        },
+        "36": {
+          "score": 3.0,
+          "n": 8
+        },
+        "37": {
+          "score": 3.0,
+          "n": 8
+        },
+        "38": {
+          "score": 3.0,
+          "n": 8
+        },
+        "39": {
+          "score": 3.0,
+          "n": 8
+        }
       }
     },
     "ANISE, BEETS, BOK CHOY, BROCCOLI, CABBAGE, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, ENDIVE, ESCAROLE, KALE GREENS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, PARSLEY, GREEN PEAS, RADISHES, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 2.6,
-        "sep": 2.25,
-        "n_jul": 32,
-        "n_aug": 40,
-        "n_sep": 32
+        "27": {
+          "score": 3.0,
+          "n": 8
+        },
+        "28": {
+          "score": 3.0,
+          "n": 8
+        },
+        "29": {
+          "score": 3.0,
+          "n": 8
+        },
+        "30": {
+          "score": 3.0,
+          "n": 8
+        },
+        "31": {
+          "score": 3.0,
+          "n": 8
+        },
+        "32": {
+          "score": 3.0,
+          "n": 8
+        },
+        "33": {
+          "score": 2.0,
+          "n": 8
+        },
+        "34": {
+          "score": 2.0,
+          "n": 8
+        },
+        "35": {
+          "score": 3.0,
+          "n": 8
+        },
+        "36": {
+          "score": 2.0,
+          "n": 8
+        },
+        "37": {
+          "score": 2.0,
+          "n": 8
+        },
+        "38": {
+          "score": 2.0,
+          "n": 8
+        },
+        "39": {
+          "score": 3.0,
+          "n": 8
+        }
       }
     },
     "BROCCOLI, CAULIFLOWER, CELERY, CHINESE CABBAGE, CILANTRO, KALE GREENS, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, MISCELLANEOUS ASIAN VEGETABLES, PARSLEY, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 40,
-        "n_aug": 32,
-        "n_sep": 32
+        "27": {
+          "score": 3.0,
+          "n": 8
+        },
+        "28": {
+          "score": 3.0,
+          "n": 8
+        },
+        "29": {
+          "score": 3.0,
+          "n": 8
+        },
+        "30": {
+          "score": 3.0,
+          "n": 8
+        },
+        "31": {
+          "score": 3.0,
+          "n": 8
+        },
+        "32": {
+          "score": 3.0,
+          "n": 8
+        },
+        "33": {
+          "score": 3.0,
+          "n": 8
+        },
+        "34": {
+          "score": 3.0,
+          "n": 8
+        },
+        "35": {
+          "score": 3.0,
+          "n": 8
+        },
+        "36": {
+          "score": 3.0,
+          "n": 8
+        },
+        "37": {
+          "score": 3.0,
+          "n": 8
+        },
+        "38": {
+          "score": 3.0,
+          "n": 8
+        },
+        "39": {
+          "score": 3.0,
+          "n": 8
+        }
       }
     },
     "ASPARAGUS, BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS": {
       "Mexico-Texas": {
-        "jul": 1.21,
-        "aug": 1.0,
-        "sep": 1.02,
-        "n_jul": 28,
-        "n_aug": 28,
-        "n_sep": 42
+        "39": {
+          "score": 1.0,
+          "n": 14
+        },
+        "28": {
+          "score": 1.0,
+          "n": 7
+        },
+        "29": {
+          "score": 1.0,
+          "n": 7
+        },
+        "30": {
+          "score": 1.43,
+          "n": 7
+        },
+        "31": {
+          "score": 1.43,
+          "n": 7
+        },
+        "32": {
+          "score": 1.0,
+          "n": 7
+        },
+        "33": {
+          "score": 1.0,
+          "n": 7
+        },
+        "34": {
+          "score": 1.0,
+          "n": 7
+        },
+        "35": {
+          "score": 1.0,
+          "n": 7
+        },
+        "36": {
+          "score": 1.0,
+          "n": 7
+        },
+        "37": {
+          "score": 1.0,
+          "n": 7
+        },
+        "38": {
+          "score": 1.0,
+          "n": 7
+        },
+        "40": {
+          "score": 1.14,
+          "n": 7
+        }
       }
     },
     "MANGOES": {
       "Mexico-Arizona": {
-        "jul": 2.77,
-        "aug": 1.68,
-        "sep": 2.65,
-        "n_jul": 13,
-        "n_aug": 47,
-        "n_sep": 34
+        "29": {
+          "score": 3.0,
+          "n": 10
+        },
+        "31": {
+          "score": 1.0,
+          "n": 10
+        },
+        "32": {
+          "score": 1.2,
+          "n": 10
+        },
+        "33": {
+          "score": 1.2,
+          "n": 10
+        },
+        "34": {
+          "score": 2.56,
+          "n": 9
+        },
+        "35": {
+          "score": 2.56,
+          "n": 9
+        },
+        "36": {
+          "score": 2.56,
+          "n": 9
+        },
+        "37": {
+          "score": 2.56,
+          "n": 9
+        },
+        "38": {
+          "score": 2.56,
+          "n": 9
+        },
+        "39": {
+          "score": 3.0,
+          "n": 7
+        },
+        "30": {
+          "score": 2.5,
+          "n": 2
+        }
       }
     },
     "BROCCOLI, CABBAGE, CAULIFLOWER, ENDIVE, ESCAROLE, KALE GREENS, BOSTON LETTUCE, GREEN LETTUCE LEAF, ICEBERG LETTUCE, RED LETTUCE LEAF, ROMAINE LETTUCE, GREEN ONIONS, PARSLEY, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 36,
-        "n_aug": 28,
-        "n_sep": 28
+        "27": {
+          "score": 3.0,
+          "n": 8
+        },
+        "28": {
+          "score": 3.0,
+          "n": 7
+        },
+        "29": {
+          "score": 3.0,
+          "n": 7
+        },
+        "30": {
+          "score": 3.0,
+          "n": 7
+        },
+        "31": {
+          "score": 3.0,
+          "n": 7
+        },
+        "32": {
+          "score": 3.0,
+          "n": 7
+        },
+        "33": {
+          "score": 3.0,
+          "n": 7
+        },
+        "34": {
+          "score": 3.0,
+          "n": 7
+        },
+        "35": {
+          "score": 3.0,
+          "n": 7
+        },
+        "36": {
+          "score": 3.0,
+          "n": 7
+        },
+        "37": {
+          "score": 3.0,
+          "n": 7
+        },
+        "38": {
+          "score": 3.0,
+          "n": 7
+        },
+        "39": {
+          "score": 3.0,
+          "n": 7
+        }
       }
     },
     "SWEET POTATOES": {
       "Southeast": {
-        "jul": 5.0,
-        "aug": 4.0,
-        "sep": 3.0,
-        "n_jul": 28,
-        "n_aug": 35,
-        "n_sep": 28
+        "27": {
+          "score": 5.0,
+          "n": 7
+        },
+        "28": {
+          "score": 5.0,
+          "n": 7
+        },
+        "29": {
+          "score": 5.0,
+          "n": 7
+        },
+        "30": {
+          "score": 5.0,
+          "n": 7
+        },
+        "31": {
+          "score": 5.0,
+          "n": 7
+        },
+        "32": {
+          "score": 4.0,
+          "n": 7
+        },
+        "33": {
+          "score": 4.0,
+          "n": 7
+        },
+        "34": {
+          "score": 4.0,
+          "n": 7
+        },
+        "35": {
+          "score": 3.0,
+          "n": 7
+        },
+        "36": {
+          "score": 3.0,
+          "n": 7
+        },
+        "37": {
+          "score": 3.0,
+          "n": 7
+        },
+        "38": {
+          "score": 3.0,
+          "n": 7
+        },
+        "39": {
+          "score": 3.0,
+          "n": 7
+        }
       }
     },
     "CELERY, SWEET CORN, BELL PEPPERS": {
       "Arizona": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 17,
-        "n_aug": 12,
-        "n_sep": 12
+        "27": {
+          "score": 3.0,
+          "n": 5
+        },
+        "28": {
+          "score": 3.0,
+          "n": 3
+        },
+        "29": {
+          "score": 3.0,
+          "n": 3
+        },
+        "30": {
+          "score": 3.0,
+          "n": 3
+        },
+        "31": {
+          "score": 3.0,
+          "n": 3
+        },
+        "32": {
+          "score": 3.0,
+          "n": 3
+        },
+        "33": {
+          "score": 3.0,
+          "n": 3
+        },
+        "34": {
+          "score": 3.0,
+          "n": 3
+        },
+        "35": {
+          "score": 3.0,
+          "n": 3
+        },
+        "36": {
+          "score": 3.0,
+          "n": 3
+        },
+        "37": {
+          "score": 3.0,
+          "n": 3
+        },
+        "38": {
+          "score": 3.0,
+          "n": 3
+        },
+        "39": {
+          "score": 3.0,
+          "n": 3
+        }
       },
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 17,
-        "n_aug": 12,
-        "n_sep": 12
+        "27": {
+          "score": 3.0,
+          "n": 5
+        },
+        "28": {
+          "score": 3.0,
+          "n": 3
+        },
+        "29": {
+          "score": 3.0,
+          "n": 3
+        },
+        "30": {
+          "score": 3.0,
+          "n": 3
+        },
+        "31": {
+          "score": 3.0,
+          "n": 3
+        },
+        "32": {
+          "score": 3.0,
+          "n": 3
+        },
+        "33": {
+          "score": 3.0,
+          "n": 3
+        },
+        "34": {
+          "score": 3.0,
+          "n": 3
+        },
+        "35": {
+          "score": 3.0,
+          "n": 3
+        },
+        "36": {
+          "score": 3.0,
+          "n": 3
+        },
+        "37": {
+          "score": 3.0,
+          "n": 3
+        },
+        "38": {
+          "score": 3.0,
+          "n": 3
+        },
+        "39": {
+          "score": 3.0,
+          "n": 3
+        }
       }
     },
     "ARTICHOKES, FRESH CUT CABBAGE, CELERY, CILANTRO, KALE GREENS, LEEKS, ROMAINE LETTUCE, PARSLEY, RADISHES": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 24,
-        "n_aug": 30,
-        "n_sep": 24
+        "27": {
+          "score": 3.0,
+          "n": 6
+        },
+        "28": {
+          "score": 3.0,
+          "n": 6
+        },
+        "29": {
+          "score": 3.0,
+          "n": 6
+        },
+        "30": {
+          "score": 3.0,
+          "n": 6
+        },
+        "31": {
+          "score": 3.0,
+          "n": 6
+        },
+        "32": {
+          "score": 3.0,
+          "n": 6
+        },
+        "33": {
+          "score": 3.0,
+          "n": 6
+        },
+        "34": {
+          "score": 3.0,
+          "n": 6
+        },
+        "35": {
+          "score": 3.0,
+          "n": 6
+        },
+        "36": {
+          "score": 3.0,
+          "n": 6
+        },
+        "37": {
+          "score": 3.0,
+          "n": 6
+        },
+        "38": {
+          "score": 3.0,
+          "n": 6
+        },
+        "39": {
+          "score": 3.0,
+          "n": 6
+        }
       }
     },
     "ARTICHOKES, BRUSSELS SPROUTS, FRESH CUT CABBAGE, CELERY, CILANTRO, KALE GREENS, PARSLEY, RADISHES, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 2.6,
-        "sep": 2.25,
-        "n_jul": 24,
-        "n_aug": 30,
-        "n_sep": 24
+        "27": {
+          "score": 3.0,
+          "n": 6
+        },
+        "28": {
+          "score": 3.0,
+          "n": 6
+        },
+        "29": {
+          "score": 3.0,
+          "n": 6
+        },
+        "30": {
+          "score": 3.0,
+          "n": 6
+        },
+        "31": {
+          "score": 3.0,
+          "n": 6
+        },
+        "32": {
+          "score": 3.0,
+          "n": 6
+        },
+        "33": {
+          "score": 2.0,
+          "n": 6
+        },
+        "34": {
+          "score": 2.0,
+          "n": 6
+        },
+        "35": {
+          "score": 3.0,
+          "n": 6
+        },
+        "36": {
+          "score": 2.0,
+          "n": 6
+        },
+        "37": {
+          "score": 2.0,
+          "n": 6
+        },
+        "38": {
+          "score": 2.0,
+          "n": 6
+        },
+        "39": {
+          "score": 3.0,
+          "n": 6
+        }
       }
     },
     "PEARS": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 9,
-        "n_aug": 31,
-        "n_sep": 32
+        "29": {
+          "score": 3.0,
+          "n": 3
+        },
+        "30": {
+          "score": 3.0,
+          "n": 3
+        },
+        "31": {
+          "score": 3.0,
+          "n": 6
+        },
+        "32": {
+          "score": 3.0,
+          "n": 6
+        },
+        "33": {
+          "score": 3.0,
+          "n": 6
+        },
+        "34": {
+          "score": 3.0,
+          "n": 8
+        },
+        "35": {
+          "score": 3.0,
+          "n": 8
+        },
+        "36": {
+          "score": 3.0,
+          "n": 8
+        },
+        "37": {
+          "score": 3.0,
+          "n": 8
+        },
+        "38": {
+          "score": 3.0,
+          "n": 8
+        },
+        "39": {
+          "score": 3.0,
+          "n": 8
+        }
       }
     },
     "AVOCADOS, GRAPEFRUIT, LEMONS, ORANGES": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": null,
-        "n_jul": 32,
-        "n_aug": 32,
-        "n_sep": 0
+        "27": {
+          "score": 3.0,
+          "n": 8
+        },
+        "28": {
+          "score": 3.0,
+          "n": 8
+        },
+        "29": {
+          "score": 3.0,
+          "n": 8
+        },
+        "30": {
+          "score": 3.0,
+          "n": 8
+        },
+        "31": {
+          "score": 3.0,
+          "n": 8
+        },
+        "32": {
+          "score": 3.0,
+          "n": 8
+        },
+        "33": {
+          "score": 3.0,
+          "n": 8
+        },
+        "34": {
+          "score": 3.0,
+          "n": 8
+        }
       }
     },
     "APPLES, BLUEBERRIES, CHERRIES, PEACHES, PEARS, PRUNES, RHUBARB": {
       "PNW": {
-        "jul": null,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 0,
-        "n_aug": 30,
-        "n_sep": 30
+        "33": {
+          "score": 3.0,
+          "n": 10
+        },
+        "34": {
+          "score": 3.0,
+          "n": 10
+        },
+        "35": {
+          "score": 3.0,
+          "n": 10
+        },
+        "36": {
+          "score": 3.0,
+          "n": 10
+        },
+        "37": {
+          "score": 3.0,
+          "n": 10
+        },
+        "38": {
+          "score": 3.0,
+          "n": 10
+        }
       }
     },
     "BROCCOLI, CARROTS, CHAYOTE, CILANTRO, CUCUMBERS, GRAPEFRUIT, LIMES, MANGOES, ORANGES, PAPAYA, ANAHEIM PEPPERS, BELL PEPPERS, HABANERO PEPPERS, JALAPENO PEPPERS, POBLANO PEPPERS, SERRANO PEPPERS, PINEAPPLES, TOMATILLOS, TOMATOES, GRAPE TOMATOES, PLUM TOMATOES, WATERMELONS": {
       "Mexico-Texas": {
-        "jul": 1.15,
-        "aug": 1.0,
-        "sep": null,
-        "n_jul": 40,
-        "n_aug": 10,
-        "n_sep": 0
+        "27": {
+          "score": 1.1,
+          "n": 10
+        },
+        "28": {
+          "score": 1.1,
+          "n": 10
+        },
+        "29": {
+          "score": 1.4,
+          "n": 10
+        },
+        "30": {
+          "score": 1.0,
+          "n": 10
+        },
+        "31": {
+          "score": 1.0,
+          "n": 10
+        }
       }
     },
     "APPLES, APRICOTS, CHERRIES, PEARS": {
       "PNW": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": null,
-        "n_jul": 40,
-        "n_aug": 10,
-        "n_sep": 0
+        "27": {
+          "score": 3.0,
+          "n": 10
+        },
+        "28": {
+          "score": 3.0,
+          "n": 10
+        },
+        "29": {
+          "score": 3.0,
+          "n": 10
+        },
+        "30": {
+          "score": 3.0,
+          "n": 10
+        },
+        "31": {
+          "score": 3.0,
+          "n": 10
+        }
       }
     },
     "CANTALOUPES, WATERMELONS": {
       "Great Lakes": {
-        "jul": 4.5,
-        "aug": 4.29,
-        "sep": 3.75,
-        "n_jul": 10,
-        "n_aug": 14,
-        "n_sep": 4
+        "29": {
+          "score": 4.5,
+          "n": 4
+        },
+        "30": {
+          "score": 4.5,
+          "n": 4
+        },
+        "31": {
+          "score": 4.25,
+          "n": 4
+        },
+        "32": {
+          "score": 4.5,
+          "n": 4
+        },
+        "33": {
+          "score": 4.33,
+          "n": 3
+        },
+        "34": {
+          "score": 4.33,
+          "n": 3
+        },
+        "35": {
+          "score": 4.0,
+          "n": 2
+        },
+        "36": {
+          "score": 4.0,
+          "n": 2
+        },
+        "37": {
+          "score": 3.5,
+          "n": 2
+        }
       },
       "Mid-Atlantic": {
-        "jul": null,
-        "aug": 5.0,
-        "sep": null,
-        "n_jul": 0,
-        "n_aug": 20,
-        "n_sep": 0
+        "31": {
+          "score": 5.0,
+          "n": 5
+        },
+        "32": {
+          "score": 5.0,
+          "n": 5
+        },
+        "33": {
+          "score": 5.0,
+          "n": 5
+        },
+        "34": {
+          "score": 5.0,
+          "n": 5
+        }
       }
     },
     "ARTICHOKES, BRUSSELS SPROUTS, CABBAGE, CELERY, CILANTRO, KALE GREENS, PARSLEY, RADISHES, SPINACH": {
       "California": {
-        "jul": 3.0,
-        "aug": 3.0,
-        "sep": 3.0,
-        "n_jul": 17,
-        "n_aug": 12,
-        "n_sep": 12
+        "27": {
+          "score": 3.0,
+          "n": 5
+        },
+        "28": {
+          "score": 3.0,
+          "n": 3
+        },
+        "29": {
+          "score": 3.0,
+          "n": 3
+        },
+        "30": {
+          "score": 3.0,
+          "n": 3
+        },
+        "31": {
+          "score": 3.0,
+          "n": 3
+        },
+        "32": {
+          "score": 3.0,
+          "n": 3
+        },
+        "33": {
+          "score": 3.0,
+          "n": 3
+        },
+        "34": {
+          "score": 3.0,
+          "n": 3
+        },
+        "35": {
+          "score": 3.0,
+          "n": 3
+        },
+        "36": {
+          "score": 3.0,
+          "n": 3
+        },
+        "37": {
+          "score": 3.0,
+          "n": 3
+        },
+        "38": {
+          "score": 3.0,
+          "n": 3
+        },
+        "39": {
+          "score": 3.0,
+          "n": 3
+        }
       }
     }
   },
